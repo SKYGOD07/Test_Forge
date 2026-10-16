@@ -220,7 +220,7 @@
                   </div>
                 </template>
 
-                <!-- FOLLOW: 关注用户 -->
+                <!-- FOLLOW: Follow User -->
                 <template v-if="action.action_type === 'FOLLOW'">
                   <div class="follow-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
@@ -240,7 +240,7 @@
                   </div>
                 </template>
 
-                <!-- DO_NOTHING: 无操作（静默） -->
+                <!-- DO_NOTHING: Silent -->
                 <template v-if="action.action_type === 'DO_NOTHING'">
                   <div class="idle-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
@@ -248,7 +248,7 @@
                   </div>
                 </template>
 
-                <!-- 通用回退：未知类型或有 content 但未被上述处理 -->
+                <!-- Fallback: unknown type or content -->
                 <div v-if="!['CREATE_POST', 'QUOTE_POST', 'REPOST', 'LIKE_POST', 'CREATE_COMMENT', 'SEARCH_POSTS', 'FOLLOW', 'UPVOTE_POST', 'DOWNVOTE_POST', 'DO_NOTHING'].includes(action.action_type) && action.action_args?.content" class="content-text">
                   {{ action.action_args.content }}
                 </div>
@@ -327,12 +327,12 @@ const actionIds = ref(new Set()) // Set for deduplicating action IDs
 const scrollContainer = ref(null)
 
 // Computed
-// 按时间顺序显示动作（最新的在最后面，即底部）
+// Display actions in chronological order
 const chronologicalActions = computed(() => {
   return allActions.value
 })
 
-// 各平台动作计数
+// Platform action count
 const twitterActionsCount = computed(() => {
   return allActions.value.filter(a => a.platform === 'twitter').length
 })
@@ -341,7 +341,7 @@ const redditActionsCount = computed(() => {
   return allActions.value.filter(a => a.platform === 'reddit').length
 })
 
-// 格式化模拟流逝时间（根据轮次和每轮分钟数计算）
+// Format simulation elapsed time
 const formatElapsedTime = (currentRound) => {
   if (!currentRound || currentRound <= 0) return '0h 0m'
   const totalMinutes = currentRound * props.minutesPerRound
@@ -350,12 +350,12 @@ const formatElapsedTime = (currentRound) => {
   return `${hours}h ${minutes}m`
 }
 
-// Twitter平台的模拟流逝时间
+// Twitter simulated elapsed time
 const twitterElapsedTime = computed(() => {
   return formatElapsedTime(runStatus.value.twitter_current_round || 0)
 })
 
-// Reddit平台的模拟流逝时间
+// Reddit simulated elapsed time
 const redditElapsedTime = computed(() => {
   return formatElapsedTime(runStatus.value.reddit_current_round || 0)
 })
@@ -365,7 +365,7 @@ const addLog = (msg) => {
   emit('add-log', msg)
 }
 
-// 重置所有状态（用于重新启动模拟）
+// State（Start simulation）
 const resetAllState = () => {
   phase.value = 0
   runStatus.value = {}
@@ -379,14 +379,14 @@ const resetAllState = () => {
   stopPolling()  // Stop existing polling
 }
 
-// 启动模拟
+// Start simulation
 const doStartSimulation = async () => {
   if (!props.simulationId) {
     addLog(t('log.errorMissingSimId'))
     return
   }
 
-  // 先重置所有状态，确保不会受到上一次模拟的影响
+  // State，
   resetAllState()
   
   isStarting.value = true
@@ -437,7 +437,7 @@ const doStartSimulation = async () => {
   }
 }
 
-// 停止模拟
+// Stop simulation
 const handleStopSimulation = async () => {
   if (!props.simulationId) return
   
@@ -462,7 +462,7 @@ const handleStopSimulation = async () => {
   }
 }
 
-// 轮询状态
+// State
 let statusTimer = null
 let detailTimer = null
 
@@ -485,7 +485,7 @@ const stopPolling = () => {
   }
 }
 
-// 追踪各平台的上一次轮次，用于检测变化并输出日志
+// Track previous round per platform
 const prevTwitterRound = ref(0)
 const prevRedditRound = ref(0)
 
@@ -500,7 +500,7 @@ const fetchRunStatus = async () => {
       
       runStatus.value = data
       
-      // 分别检测各平台的轮次变化并输出日志
+      // Detect round changes and log
       if (data.twitter_current_round > prevTwitterRound.value) {
         addLog(`[Plaza] R${data.twitter_current_round}/${data.total_rounds} | T:${data.twitter_simulated_hours || 0}h | A:${data.twitter_actions_count}`)
         prevTwitterRound.value = data.twitter_current_round
@@ -511,7 +511,7 @@ const fetchRunStatus = async () => {
         prevRedditRound.value = data.reddit_current_round
       }
       
-      // 检测模拟是否已完成（通过 runner_status 或平台完成状态判断）
+      // （ runner_status State）
       const isCompleted = data.runner_status === 'completed' || data.runner_status === 'stopped'
       const isFailed = data.runner_status === 'failed'
       
@@ -534,24 +534,24 @@ const fetchRunStatus = async () => {
   }
 }
 
-// 检查所有启用的平台是否已完成
+//
 const checkPlatformsCompleted = (data) => {
-  // 如果没有任何平台数据，返回 false
+  // ， false
   if (!data) return false
   
-  // 检查各平台的完成状态
+  // State
   const twitterCompleted = data.twitter_completed === true
   const redditCompleted = data.reddit_completed === true
   
-  // 如果至少有一个平台完成了，检查是否所有启用的平台都完成了
-  // 通过 actions_count 判断平台是否被启用（如果 count > 0 或 running 曾为 true）
+  // ，
+  // actions_count （ count > 0  running  true）
   const twitterEnabled = (data.twitter_actions_count > 0) || data.twitter_running || twitterCompleted
   const redditEnabled = (data.reddit_actions_count > 0) || data.reddit_running || redditCompleted
   
-  // 如果没有任何平台被启用，返回 false
+  // ， false
   if (!twitterEnabled && !redditEnabled) return false
   
-  // 检查所有启用的平台是否都已完成
+  //
   if (twitterEnabled && !twitterCompleted) return false
   if (redditEnabled && !redditCompleted) return false
   
@@ -565,13 +565,13 @@ const fetchRunStatusDetail = async () => {
     const res = await getRunStatusDetail(props.simulationId)
     
     if (res.success && res.data) {
-      // 使用 all_actions 获取完整的动作列表
+      // all_actions
       const serverActions = res.data.all_actions || []
       
-      // 增量添加新动作（去重）
+      // （）
       let newActionsAdded = 0
       serverActions.forEach(action => {
-        // 生成唯一ID
+        // ID
         const actionId = action.id || `${action.timestamp}-${action.platform}-${action.agent_id}-${action.action_type}`
         
         if (!actionIds.value.has(actionId)) {
@@ -584,8 +584,8 @@ const fetchRunStatusDetail = async () => {
         }
       })
       
-      // 不自动滚动，让用户自由查看时间轴
-      // 新动作会在底部追加
+      // ，
+      //
     }
   } catch (err) {
     console.warn('Failed to get detailed status:', err)
@@ -666,7 +666,7 @@ const handleNextStep = async () => {
       const reportId = res.data.report_id
       addLog(t('log.reportGenTaskStarted', { reportId }))
       
-      // 跳转到报告页面
+      //
       router.push({ name: 'Report', params: { reportId } })
     } else {
       addLog(t('log.reportGenFailed', { error: res.error || t('common.unknownError') }))
