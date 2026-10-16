@@ -127,7 +127,7 @@
             </div>
           </div>
 
-          <!-- Next Step Button - 在完成后显示 -->
+          <!-- Next Step Button - show on completion -->
           <button v-if="isComplete" class="next-step-btn" @click="goToInteraction">
             <span>{{ $t('step4.goToInteraction') }}</span>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -194,7 +194,7 @@
                     </div>
                   </template>
                   
-                  <!-- Section Content Generated (内容生成完成，但整个章节可能还没完成) -->
+                  <!-- Section Content Generated -->
                   <template v-if="log.action === 'section_content'">
                     <div class="section-tag content-ready">
                       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -205,7 +205,7 @@
                     </div>
                   </template>
 
-                  <!-- Section Complete (章节生成完成) -->
+                  <!-- Section Complete -->
                   <template v-if="log.action === 'section_complete'">
                     <div class="section-tag completed">
                       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -315,7 +315,7 @@
                         Final: {{ log.details?.has_final_answer ? 'Yes' : 'No' }}
                       </span>
                     </div>
-                    <!-- 当是最终答案时，显示特殊提示 -->
+                    <!-- Final answer notice -->
                     <div v-if="log.details?.has_final_answer" class="final-answer-hint">
                       <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"></polyline>
@@ -433,22 +433,22 @@ const showRawResult = reactive({})
 
 // Toggle functions
 const toggleRawResult = (timestamp, event) => {
-  // 保存按钮相对于视口的位置
+  // Save button position relative to viewport
   const button = event?.target
   const buttonRect = button?.getBoundingClientRect()
   const buttonTopBeforeToggle = buttonRect?.top
   
-  // 切换状态
+  // Toggle state
   showRawResult[timestamp] = !showRawResult[timestamp]
   
-  // 等待 DOM 更新后，调整滚动位置以保持按钮在相同位置
+  // Adjust scroll position after DOM update
   if (button && buttonTopBeforeToggle !== undefined && rightPanel.value) {
     nextTick(() => {
       const newButtonRect = button.getBoundingClientRect()
       const buttonTopAfterToggle = newButtonRect.top
       const scrollDelta = buttonTopAfterToggle - buttonTopBeforeToggle
       
-      // 调整滚动位置
+      // Adjust scroll position
       rightPanel.value.scrollTop += scrollDelta
     })
   }
@@ -466,7 +466,7 @@ const toggleSectionContent = (idx) => {
 }
 
 const toggleSectionCollapse = (idx) => {
-  // 只有已完成的章节才能折叠
+  // Only completed sections can be collapsed
   if (!generatedSections.value[idx + 1]) return
   const newSet = new Set(collapsedSections.value)
   if (newSet.has(idx)) {
@@ -499,32 +499,32 @@ const toolConfig = {
   'insight_forge': {
     name: 'Deep Insight',
     color: 'purple',
-    icon: 'lightbulb' // 灯泡图标 - 代表洞察
+    icon: 'lightbulb' // Lightbulb icon - insights
   },
   'panorama_search': {
     name: 'Panorama Search',
     color: 'blue',
-    icon: 'globe' // 地球图标 - 代表全景搜索
+    icon: 'globe' // Globe icon - panorama search
   },
   'interview_agents': {
     name: 'Agent Interview',
     color: 'green',
-    icon: 'users' // 用户图标 - 代表对话
+    icon: 'users' // Users icon - interviews
   },
   'quick_search': {
     name: 'Quick Search',
     color: 'orange',
-    icon: 'zap' // 闪电图标 - 代表快速
+    icon: 'zap' // Zap icon - quick summary
   },
   'get_graph_statistics': {
     name: 'Graph Stats',
     color: 'cyan',
-    icon: 'chart' // 图表图标 - 代表统计
+    icon: 'chart' // Chart icon - statistics
   },
   'get_entities_by_type': {
     name: 'Entity Query',
     color: 'pink',
-    icon: 'database' // 数据库图标 - 代表实体
+    icon: 'database' // Database icon - entities
   }
 }
 
@@ -554,30 +554,30 @@ const parseInsightForge = (text) => {
   
   try {
     // 提取分析问题
-    const queryMatch = text.match(/分析问题:\s*(.+?)(?:\n|$)/)
+    const queryMatch = text.match(/(?:Analysis Question|分析问题):\s*(.+?)(?:\n|$)/i)
     if (queryMatch) result.query = queryMatch[1].trim()
     
     // 提取预测场景
-    const reqMatch = text.match(/预测场景:\s*(.+?)(?:\n|$)/)
+    const reqMatch = text.match(/(?:Scenario|预测场景):\s*(.+?)(?:\n|$)/i)
     if (reqMatch) result.simulationRequirement = reqMatch[1].trim()
     
     // 提取统计数据 - 匹配"相关预测事实: X条"格式
-    const factMatch = text.match(/相关预测事实:\s*(\d+)/)
-    const entityMatch = text.match(/涉及实体:\s*(\d+)/)
-    const relMatch = text.match(/关系链:\s*(\d+)/)
+    const factMatch = text.match(/(?:Relevant Facts|相关预测事实):\s*(\d+)/i)
+    const entityMatch = text.match(/(?:Entities Involved|涉及实体):\s*(\d+)/i)
+    const relMatch = text.match(/(?:Relationship Chain|关系链):\s*(\d+)/i)
     if (factMatch) result.stats.facts = parseInt(factMatch[1])
     if (entityMatch) result.stats.entities = parseInt(entityMatch[1])
     if (relMatch) result.stats.relationships = parseInt(relMatch[1])
     
     // 提取子问题 - 完整提取，不限制数量
-    const subQSection = text.match(/### 分析的子问题\n([\s\S]*?)(?=\n###|$)/)
+    const subQSection = text.match(/### (?:Sub-questions Analyzed|分析的子问题)\n([\s\S]*?)(?=\n###|$)/i)
     if (subQSection) {
       const lines = subQSection[1].split('\n').filter(l => l.match(/^\d+\./))
       result.subQueries = lines.map(l => l.replace(/^\d+\.\s*/, '').trim()).filter(Boolean)
     }
     
     // 提取关键事实 - 完整提取，不限制数量
-    const factsSection = text.match(/### 【关键事实】[\s\S]*?\n([\s\S]*?)(?=\n###|$)/)
+    const factsSection = text.match(/### (?:【Key Facts】|【关键事实】)[\s\S]*?\n([\s\S]*?)(?=\n###|$)/i)
     if (factsSection) {
       const lines = factsSection[1].split('\n').filter(l => l.match(/^\d+\./))
       result.facts = lines.map(l => {
@@ -587,7 +587,7 @@ const parseInsightForge = (text) => {
     }
     
     // 提取核心实体 - 完整提取，包含摘要和相关事实数
-    const entitySection = text.match(/### 【核心实体】\n([\s\S]*?)(?=\n###|$)/)
+    const entitySection = text.match(/### (?:【Core Entities】|【核心实体】)\n([\s\S]*?)(?=\n###|$)/i)
     if (entitySection) {
       const entityText = entitySection[1]
       // 按 "- **" 分割实体块
@@ -606,7 +606,7 @@ const parseInsightForge = (text) => {
     }
     
     // 提取关系链 - 完整提取，不限制数量
-    const relSection = text.match(/### 【关系链】\n([\s\S]*?)(?=\n###|$)/)
+    const relSection = text.match(/### (?:【Relationship Chain】|【关系链】)\n([\s\S]*?)(?=\n###|$)/i)
     if (relSection) {
       const lines = relSection[1].split('\n').filter(l => l.trim().startsWith('-'))
       result.relations = lines.map(l => {
@@ -635,21 +635,21 @@ const parsePanorama = (text) => {
   
   try {
     // 提取查询
-    const queryMatch = text.match(/查询:\s*(.+?)(?:\n|$)/)
+    const queryMatch = text.match(/(?:Query|查询):\s*(.+?)(?:\n|$)/i)
     if (queryMatch) result.query = queryMatch[1].trim()
     
     // 提取统计数据
-    const nodesMatch = text.match(/总节点数:\s*(\d+)/)
-    const edgesMatch = text.match(/总边数:\s*(\d+)/)
-    const activeMatch = text.match(/当前有效事实:\s*(\d+)/)
-    const histMatch = text.match(/历史\/过期事实:\s*(\d+)/)
+    const nodesMatch = text.match(/(?:Total Nodes|总节点数):\s*(\d+)/i)
+    const edgesMatch = text.match(/(?:Total Edges|总边数):\s*(\d+)/i)
+    const activeMatch = text.match(/(?:Active Facts|当前有效事实):\s*(\d+)/i)
+    const histMatch = text.match(/(?:Historical Facts|历史\/过期事实):\s*(\d+)/i)
     if (nodesMatch) result.stats.nodes = parseInt(nodesMatch[1])
     if (edgesMatch) result.stats.edges = parseInt(edgesMatch[1])
     if (activeMatch) result.stats.activeFacts = parseInt(activeMatch[1])
     if (histMatch) result.stats.historicalFacts = parseInt(histMatch[1])
     
     // 提取当前有效事实 - 完整提取，不限制数量
-    const activeSection = text.match(/### 【当前有效事实】[\s\S]*?\n([\s\S]*?)(?=\n###|$)/)
+    const activeSection = text.match(/### (?:【Active Facts】|【当前有效事实】)[\s\S]*?\n([\s\S]*?)(?=\n###|$)/i)
     if (activeSection) {
       const lines = activeSection[1].split('\n').filter(l => l.match(/^\d+\./))
       result.activeFacts = lines.map(l => {
@@ -660,7 +660,7 @@ const parsePanorama = (text) => {
     }
     
     // 提取历史/过期事实 - 完整提取，不限制数量
-    const histSection = text.match(/### 【历史\/过期事实】[\s\S]*?\n([\s\S]*?)(?=\n###|$)/)
+    const histSection = text.match(/### (?:【Historical Facts】|【历史\/过期事实】)[\s\S]*?\n([\s\S]*?)(?=\n###|$)/i)
     if (histSection) {
       const lines = histSection[1].split('\n').filter(l => l.match(/^\d+\./))
       result.historicalFacts = lines.map(l => {
@@ -670,7 +670,7 @@ const parsePanorama = (text) => {
     }
     
     // 提取涉及实体 - 完整提取，不限制数量
-    const entitySection = text.match(/### 【涉及实体】\n([\s\S]*?)(?=\n###|$)/)
+    const entitySection = text.match(/### (?:【Involved Entities】|【涉及实体】)\n([\s\S]*?)(?=\n###|$)/i)
     if (entitySection) {
       const lines = entitySection[1].split('\n').filter(l => l.trim().startsWith('-'))
       result.entities = lines.map(l => {
@@ -699,11 +699,11 @@ const parseInterview = (text) => {
   
   try {
     // 提取采访主题
-    const topicMatch = text.match(/\*\*采访主题:\*\*\s*(.+?)(?:\n|$)/)
+    const topicMatch = text.match(/\*\*(?:Interview Topic|采访主题):\*\*\s*(.+?)(?:\n|$)/i)
     if (topicMatch) result.topic = topicMatch[1].trim()
     
     // 提取采访人数（如 "5 / 9 位模拟Agent"）
-    const countMatch = text.match(/\*\*采访人数:\*\*\s*(\d+)\s*\/\s*(\d+)/)
+    const countMatch = text.match(/\*\*(?:Interviewees|采访人数):\*\*\s*(\d+)\s*\/\s*(\d+)/i)
     if (countMatch) {
       result.successCount = parseInt(countMatch[1])
       result.totalCount = parseInt(countMatch[2])
@@ -711,7 +711,7 @@ const parseInterview = (text) => {
     }
     
     // 提取采访对象选择理由
-    const reasonMatch = text.match(/### 采访对象选择理由\n([\s\S]*?)(?=\n---\n|\n### 采访实录)/)
+    const reasonMatch = text.match(/### (?:Interview Selection Reasons|采访对象选择理由)\n([\s\S]*?)(?=\n---\n|\n### (?:Interview Transcript|采访实录))/i)
     if (reasonMatch) {
       result.selectionReason = reasonMatch[1].trim()
     }
@@ -890,7 +890,7 @@ const parseInterview = (text) => {
     })
     
     // 提取采访摘要
-    const summaryMatch = text.match(/### 采访摘要与核心观点\n([\s\S]*?)$/)
+    const summaryMatch = text.match(/### (?:Interview Summary & Core Views|采访摘要与核心观点)\n([\s\S]*?)$/i)
     if (summaryMatch) {
       result.summary = summaryMatch[1].trim()
     }
@@ -912,22 +912,22 @@ const parseQuickSearch = (text) => {
   
   try {
     // 提取搜索查询
-    const queryMatch = text.match(/搜索查询:\s*(.+?)(?:\n|$)/)
+    const queryMatch = text.match(/(?:Search Query|搜索查询):\s*(.+?)(?:\n|$)/i)
     if (queryMatch) result.query = queryMatch[1].trim()
     
     // 提取结果数量
-    const countMatch = text.match(/找到\s*(\d+)\s*条/)
+    const countMatch = text.match(/(?:Found|找到)\s*(\d+)\s*(?:results|条)/i)
     if (countMatch) result.count = parseInt(countMatch[1])
     
     // 提取相关事实 - 完整提取，不限制数量
-    const factsSection = text.match(/### 相关事实:\n([\s\S]*)$/)
+    const factsSection = text.match(/### (?:Relevant Facts|相关事实):\n([\s\S]*)$/i)
     if (factsSection) {
       const lines = factsSection[1].split('\n').filter(l => l.match(/^\d+\./))
       result.facts = lines.map(l => l.replace(/^\d+\.\s*/, '').trim()).filter(Boolean)
     }
     
     // 尝试提取边信息（如果有）
-    const edgesSection = text.match(/### 相关边:\n([\s\S]*?)(?=\n###|$)/)
+    const edgesSection = text.match(/### (?:Relevant Edges|相关边):\n([\s\S]*?)(?=\n###|$)/i)
     if (edgesSection) {
       const lines = edgesSection[1].split('\n').filter(l => l.trim().startsWith('-'))
       result.edges = lines.map(l => {
@@ -940,7 +940,7 @@ const parseQuickSearch = (text) => {
     }
     
     // 尝试提取节点信息（如果有）
-    const nodesSection = text.match(/### 相关节点:\n([\s\S]*?)(?=\n###|$)/)
+    const nodesSection = text.match(/### (?:Relevant Nodes|相关节点):\n([\s\S]*?)(?=\n###|$)/i)
     if (nodesSection) {
       const lines = nodesSection[1].split('\n').filter(l => l.trim().startsWith('-'))
       result.nodes = lines.map(l => {
@@ -1471,7 +1471,7 @@ const InterviewDisplay = {
         
         // Selection Reason - 选择理由
         props.result.interviews[activeIndex.value]?.selectionReason && h('div', { class: 'selection-reason' }, [
-          h('div', { class: 'reason-label' }, '选择理由'),
+          h('div', { class: 'reason-label' }, 'Selection Reason'),
           h('div', { class: 'reason-content' }, props.result.interviews[activeIndex.value].selectionReason)
         ]),
         
@@ -1781,7 +1781,7 @@ const activeStep = computed(() => {
   if (doneSteps.length > 0) return doneSteps[doneSteps.length - 1]
   
   // 否则返回第一个步骤
-  return steps[0] || { noLabel: '--', title: '等待开始', status: 'todo', meta: '' }
+  return steps[0] || { noLabel: '--', title: 'Waiting to start', status: 'todo', meta: '' }
 })
 
 const workflowSteps = computed(() => {
@@ -2011,8 +2011,8 @@ const getActionLabel = (action) => {
 }
 
 const getLogLevelClass = (log) => {
-  if (log.includes('ERROR') || log.includes('错误')) return 'error'
-  if (log.includes('WARNING') || log.includes('警告')) return 'warning'
+  if (log.includes('ERROR') || log.includes('Error')) return 'error'
+  if (log.includes('WARNING') || log.includes('Warning')) return 'warning'
   // INFO 使用默认颜色，不标记为 success
   return ''
 }
@@ -2054,7 +2054,7 @@ const fetchAgentLog = async () => {
           
           if (log.action === 'report_complete') {
             isComplete.value = true
-            currentSectionIndex.value = null  // 确保清除 loading 状态
+            currentSectionIndex.value = null  // Clear loading state
             emit('update-status', 'completed')
             stopPolling()
             // 滚动逻辑统一在循环结束后的 nextTick 中处理
@@ -2103,7 +2103,7 @@ const extractFinalContent = (response) => {
   }
   
   // 尝试找 最终答案: 后面的内容
-  const chineseFinalMatch = response.match(/最终答案[:：]\s*\n*([\s\S]*)$/i)
+  const chineseFinalMatch = response.match(/(?:Final Answer|最终答案)[:：]\s*\n*([\s\S]*)$/i)
   if (chineseFinalMatch) {
     return chineseFinalMatch[1].trim()
   }
@@ -2461,7 +2461,7 @@ watch(() => props.reportId, (newId) => {
 .section-number {
   font-family: 'JetBrains Mono', monospace;
   font-size: 16px;
-  color: #9CA3AF; /* 深灰色，不随状态变化 */
+  color: #9CA3AF; /* Dark gray, fixed */
   font-weight: 500;
 }
 

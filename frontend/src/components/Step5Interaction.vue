@@ -437,7 +437,7 @@ const showToolsDetail = ref(true)
 // Chat State
 const chatInput = ref('')
 const chatHistory = ref([])
-const chatHistoryCache = ref({}) // 缓存所有对话记录: { 'report_agent': [], 'agent_0': [], 'agent_1': [], ... }
+const chatHistoryCache = ref({}) // Cache conversation logs: { 'report_agent': [], 'agent_0': [], 'agent_1': [], ... }
 const isSending = ref(false)
 const chatMessages = ref(null)
 const chatInputRef = ref(null)
@@ -487,7 +487,7 @@ const selectChatTarget = (target) => {
   }
 }
 
-// 保存当前对话记录到缓存
+// Save conversation to cache
 const saveChatHistory = () => {
   if (chatHistory.value.length === 0) return
   
@@ -499,7 +499,7 @@ const saveChatHistory = () => {
 }
 
 const selectReportAgentChat = () => {
-  // 保存当前对话记录
+  // Save current conversation
   saveChatHistory()
   
   activeTab.value = 'chat'
@@ -508,7 +508,7 @@ const selectReportAgentChat = () => {
   selectedAgentIndex.value = null
   showAgentDropdown.value = false
   
-  // 恢复 Report Agent 的对话记录
+  // Restore Report Agent conversation
   chatHistory.value = chatHistoryCache.value['report_agent'] || []
 }
 
@@ -528,7 +528,7 @@ const toggleAgentDropdown = () => {
 }
 
 const selectAgent = (agent, idx) => {
-  // 保存当前对话记录
+  // Save current conversation
   saveChatHistory()
   
   selectedAgent.value = agent
@@ -536,7 +536,7 @@ const selectAgent = (agent, idx) => {
   chatTarget.value = 'agent'
   showAgentDropdown.value = false
   
-  // 恢复该 Agent 的对话记录
+  // Restore agent conversation
   chatHistory.value = chatHistoryCache.value[`agent_${idx}`] || []
   addLog(t('log.selectChatTarget', { name: agent.username }))
 }
@@ -566,7 +566,7 @@ const renderMarkdown = (content) => {
   html = html.replace(/^# (.+)$/gm, '<h2 class="md-h2">$1</h2>')
   html = html.replace(/^> (.+)$/gm, '<blockquote class="md-quote">$1</blockquote>')
   
-  // 处理列表 - 支持子列表
+  // Process lists - support sub-lists
   html = html.replace(/^(\s*)- (.+)$/gm, (match, indent, text) => {
     const level = Math.floor(indent.length / 2)
     return `<li class="md-li" data-level="${level}">${text}</li>`
@@ -576,12 +576,12 @@ const renderMarkdown = (content) => {
     return `<li class="md-oli" data-level="${level}">${text}</li>`
   })
   
-  // 包装无序列表
+  // Wrap unordered list
   html = html.replace(/(<li class="md-li"[^>]*>.*?<\/li>\s*)+/g, '<ul class="md-ul">$&</ul>')
-  // 包装有序列表
+  // Wrap ordered list
   html = html.replace(/(<li class="md-oli"[^>]*>.*?<\/li>\s*)+/g, '<ol class="md-ol">$&</ol>')
   
-  // 清理列表项之间的所有空白
+  // Clean whitespace between list items
   html = html.replace(/<\/li>\s+<li/g, '</li><li')
   // 清理列表开始标签后的空白
   html = html.replace(/<ul class="md-ul">\s+/g, '<ul class="md-ul">')
@@ -722,9 +722,9 @@ const sendToAgent = async (message) => {
     const historyContext = chatHistory.value
       .slice(0, -1)
       .slice(-6)
-      .map(msg => `${msg.role === 'user' ? '提问者' : '你'}：${msg.content}`)
+      .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
       .join('\n')
-    prompt = `以下是我们之前的对话：\n${historyContext}\n\n现在我的新问题是：${message}`
+    prompt = `Here is our conversation history:\n${historyContext}\n\nMy new question is: ${message}`
   }
   
   const res = await interviewAgents({
