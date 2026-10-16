@@ -1,212 +1,258 @@
 <template>
   <div class="home-container">
-    <!-- 顶部导航栏 -->
+    <!-- Top Navigation Bar -->
     <nav class="navbar">
-      <div class="nav-brand">MIROFISH</div>
+      <div class="nav-left">
+        <div class="nav-brand" @click="currentTab = 'notice'">
+          <img src="/logo.svg" alt="CampusPulse AI Logo" class="nav-logo-icon" />
+          <span class="brand-text">CAMPUSPULSE AI</span>
+        </div>
+        <span class="nav-tagline">{{ $t('nav.tagline') }}</span>
+      </div>
+
+      <div class="nav-center-tabs">
+        <button 
+          class="tab-btn" 
+          :class="{ active: currentTab === 'notice' }" 
+          @click="currentTab = 'notice'"
+        >
+          <span class="tab-icon">⚡</span>
+          <span>Notice-to-Action</span>
+          <span class="gemma-pill">Gemma 4</span>
+        </button>
+
+        <button 
+          class="tab-btn" 
+          :class="{ active: currentTab === 'sandbox' }" 
+          @click="currentTab = 'sandbox'"
+        >
+          <span class="tab-icon">🧪</span>
+          <span>Campus Reaction Sandbox</span>
+        </button>
+      </div>
+
       <div class="nav-links">
         <LanguageSwitcher />
-        <a href="https://github.com/666ghj/MiroFish" target="_blank" class="github-link">
-          {{ $t('nav.visitGithub') }} <span class="arrow">↗</span>
+        <a 
+          href="https://www.mlh.com/events/hacktoberfest-hack-day-gwalior-x-itm-university" 
+          target="_blank" 
+          class="event-link"
+          title="MLH Hacktoberfest Hack Day Gwalior x ITM University"
+        >
+          {{ $t('nav.eventLink') }} <span class="arrow">↗</span>
         </a>
       </div>
     </nav>
 
     <div class="main-content">
-      <!-- 上半部分：Hero 区域 -->
-      <section class="hero-section">
-        <div class="hero-left">
-          <div class="tag-row">
-            <span class="orange-tag">{{ $t('home.tagline') }}</span>
-            <span class="version-text">{{ $t('home.version') }}</span>
-          </div>
-          
-          <h1 class="main-title">
-            {{ $t('home.heroTitle1') }}<br>
-            <span class="gradient-text">{{ $t('home.heroTitle2') }}</span>
-          </h1>
-          
-          <div class="hero-desc">
-            <p>
-              <i18n-t keypath="home.heroDesc" tag="span">
-                <template #brand><span class="highlight-bold">{{ $t('home.heroDescBrand') }}</span></template>
-                <template #agentScale><span class="highlight-orange">{{ $t('home.heroDescAgentScale') }}</span></template>
-                <template #optimalSolution><span class="highlight-code">{{ $t('home.heroDescOptimalSolution') }}</span></template>
-              </i18n-t>
-            </p>
-            <p class="slogan-text">
-              {{ $t('home.slogan') }}<span class="blinking-cursor">_</span>
+      <!-- TAB 1: Notice-to-Action (Primary Feature) -->
+      <section v-if="currentTab === 'notice'" class="feature-section">
+        <!-- Hero Header -->
+        <div class="hero-strip">
+          <div class="hero-strip-left">
+            <div class="tag-row">
+              <span class="hackathon-tag">MLH HACKTOBERFEST HACK DAY GWALIOR</span>
+              <span class="gemma-prize-tag">Best Use of Gemma 4</span>
+            </div>
+            <h1 class="main-hero-title">
+              Turn Campus Notices<br>
+              <span class="gradient-text">Into Clear Actions</span>
+            </h1>
+            <p class="hero-strip-desc">
+              Transform confusing event posters, exam deadlines, circulars, and university policy memos into verified, prioritized action checklists with Gemma 4 multimodal intelligence.
             </p>
           </div>
-           
-          <div class="decoration-square"></div>
         </div>
-        
-        <div class="hero-right">
-          <!-- Logo 区域 -->
-          <div class="logo-container">
-            <img src="../assets/logo/MiroFish_logo_left.jpeg" alt="MiroFish Logo" class="hero-logo" />
-          </div>
-          
-          <button class="scroll-down-btn" @click="scrollToBottom">
-            ↓
-          </button>
-        </div>
+
+        <!-- The Notice-to-Action Interactive Workspace -->
+        <NoticeToAction />
       </section>
 
-      <!-- 下半部分：双栏布局 -->
-      <section class="dashboard-section">
-        <!-- 左栏：状态与步骤 -->
-        <div class="left-panel">
-          <div class="panel-header">
-            <span class="status-dot">■</span> {{ $t('home.systemStatus') }}
-          </div>
-          
-          <h2 class="section-title">{{ $t('home.systemReady') }}</h2>
-          <p class="section-desc">
-            {{ $t('home.systemReadyDesc') }}
-          </p>
-          
-          <!-- 数据指标卡片 -->
-          <div class="metrics-row">
-            <div class="metric-card">
-              <div class="metric-value">{{ $t('home.metricLowCost') }}</div>
-              <div class="metric-label">{{ $t('home.metricLowCostDesc') }}</div>
+      <!-- TAB 2: Campus Reaction Sandbox (Inherited Multi-Agent Simulation Engine) -->
+      <section v-show="currentTab === 'sandbox'" class="sandbox-section">
+        <!-- Sandbox Hero -->
+        <div class="sandbox-hero">
+          <div class="sandbox-hero-left">
+            <div class="tag-row">
+              <span class="sandbox-tag">CAMPUS REACTION SIMULATION</span>
+              <span class="version-text">Multi-Agent Sandbox</span>
             </div>
-            <div class="metric-card">
-              <div class="metric-value">{{ $t('home.metricHighAvail') }}</div>
-              <div class="metric-label">{{ $t('home.metricHighAvailDesc') }}</div>
-            </div>
-          </div>
-
-          <!-- 项目模拟步骤介绍 (新增区域) -->
-          <div class="steps-container">
-            <div class="steps-header">
-               <span class="diamond-icon">◇</span> {{ $t('home.workflowSequence') }}
-            </div>
-            <div class="workflow-list">
-              <div class="workflow-item">
-                <span class="step-num">01</span>
-                <div class="step-info">
-                  <div class="step-title">{{ $t('home.step01Title') }}</div>
-                  <div class="step-desc">{{ $t('home.step01Desc') }}</div>
-                </div>
-              </div>
-              <div class="workflow-item">
-                <span class="step-num">02</span>
-                <div class="step-info">
-                  <div class="step-title">{{ $t('home.step02Title') }}</div>
-                  <div class="step-desc">{{ $t('home.step02Desc') }}</div>
-                </div>
-              </div>
-              <div class="workflow-item">
-                <span class="step-num">03</span>
-                <div class="step-info">
-                  <div class="step-title">{{ $t('home.step03Title') }}</div>
-                  <div class="step-desc">{{ $t('home.step03Desc') }}</div>
-                </div>
-              </div>
-              <div class="workflow-item">
-                <span class="step-num">04</span>
-                <div class="step-info">
-                  <div class="step-title">{{ $t('home.step04Title') }}</div>
-                  <div class="step-desc">{{ $t('home.step04Desc') }}</div>
-                </div>
-              </div>
-              <div class="workflow-item">
-                <span class="step-num">05</span>
-                <div class="step-info">
-                  <div class="step-title">{{ $t('home.step05Title') }}</div>
-                  <div class="step-desc">{{ $t('home.step05Desc') }}</div>
-                </div>
-              </div>
-            </div>
+            
+            <h2 class="sandbox-title">
+              Simulate Student Responses<br>
+              <span class="gradient-text">Before Policy Rollouts</span>
+            </h2>
+            
+            <p class="sandbox-desc">
+              Rehearse how student bodies, faculty departments, and clubs react to notices. Upload official announcements and seed materials to simulate discussions and forecast campus impact.
+            </p>
           </div>
         </div>
 
-        <!-- 右栏：交互控制台 -->
-        <div class="right-panel">
-          <div class="console-box">
-            <!-- 上传区域 -->
-            <div class="console-section">
-              <div class="console-header">
-                <span class="console-label">{{ $t('home.realitySeed') }}</span>
-                <span class="console-meta">{{ $t('home.supportedFormats') }}</span>
+        <!-- Dashboard Section: Status & Simulation Console -->
+        <div class="dashboard-section">
+          <!-- Left Panel: Pipeline Info -->
+          <div class="left-panel">
+            <div class="panel-header">
+              <span class="status-dot">■</span> {{ $t('home.systemStatus') }}
+            </div>
+            
+            <h2 class="section-title">{{ $t('home.systemReady') }}</h2>
+            <p class="section-desc">
+              {{ $t('home.systemReadyDesc') }}
+            </p>
+            
+            <!-- Metrics Row -->
+            <div class="metrics-row">
+              <div class="metric-card">
+                <div class="metric-value">{{ $t('home.metricLowCost') }}</div>
+                <div class="metric-label">{{ $t('home.metricLowCostDesc') }}</div>
               </div>
-              
-              <div 
-                class="upload-zone"
-                :class="{ 'drag-over': isDragOver, 'has-files': files.length > 0 }"
-                @dragover.prevent="handleDragOver"
-                @dragleave.prevent="handleDragLeave"
-                @drop.prevent="handleDrop"
-                @click="triggerFileInput"
-              >
-                <input
-                  ref="fileInput"
-                  type="file"
-                  multiple
-                  accept=".pdf,.md,.txt"
-                  @change="handleFileSelect"
-                  style="display: none"
-                  :disabled="loading"
-                />
-                
-                <div v-if="files.length === 0" class="upload-placeholder">
-                  <div class="upload-icon">↑</div>
-                  <div class="upload-title">{{ $t('home.dragToUpload') }}</div>
-                  <div class="upload-hint">{{ $t('home.orBrowse') }}</div>
+              <div class="metric-card">
+                <div class="metric-value">{{ $t('home.metricHighAvail') }}</div>
+                <div class="metric-label">{{ $t('home.metricHighAvailDesc') }}</div>
+              </div>
+            </div>
+
+            <!-- Workflow Sequence -->
+            <div class="steps-container">
+              <div class="steps-header">
+                <span class="diamond-icon">◇</span> {{ $t('home.workflowSequence') }}
+              </div>
+              <div class="workflow-list">
+                <div class="workflow-item">
+                  <span class="step-num">01</span>
+                  <div class="step-info">
+                    <div class="step-title">{{ $t('home.step01Title') }}</div>
+                    <div class="step-desc">{{ $t('home.step01Desc') }}</div>
+                  </div>
                 </div>
-                
-                <div v-else class="file-list">
-                  <div v-for="(file, index) in files" :key="index" class="file-item">
-                    <span class="file-icon">📄</span>
-                    <span class="file-name">{{ file.name }}</span>
-                    <button @click.stop="removeFile(index)" class="remove-btn">×</button>
+                <div class="workflow-item">
+                  <span class="step-num">02</span>
+                  <div class="step-info">
+                    <div class="step-title">{{ $t('home.step02Title') }}</div>
+                    <div class="step-desc">{{ $t('home.step02Desc') }}</div>
+                  </div>
+                </div>
+                <div class="workflow-item">
+                  <span class="step-num">03</span>
+                  <div class="step-info">
+                    <div class="step-title">{{ $t('home.step03Title') }}</div>
+                    <div class="step-desc">{{ $t('home.step03Desc') }}</div>
+                  </div>
+                </div>
+                <div class="workflow-item">
+                  <span class="step-num">04</span>
+                  <div class="step-info">
+                    <div class="step-title">{{ $t('home.step04Title') }}</div>
+                    <div class="step-desc">{{ $t('home.step04Desc') }}</div>
+                  </div>
+                </div>
+                <div class="workflow-item">
+                  <span class="step-num">05</span>
+                  <div class="step-info">
+                    <div class="step-title">{{ $t('home.step05Title') }}</div>
+                    <div class="step-desc">{{ $t('home.step05Desc') }}</div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- 分割线 -->
-            <div class="console-divider">
-              <span>{{ $t('home.inputParams') }}</span>
-            </div>
-
-            <!-- 输入区域 -->
-            <div class="console-section">
-              <div class="console-header">
-                <span class="console-label">{{ $t('home.simulationPrompt') }}</span>
+          <!-- Right Panel: Interactive Console -->
+          <div class="right-panel">
+            <div class="console-box">
+              <!-- Upload Section -->
+              <div class="console-section">
+                <div class="console-header">
+                  <span class="console-label">{{ $t('home.realitySeed') }}</span>
+                  <span class="console-meta">{{ $t('home.supportedFormats') }}</span>
+                </div>
+                
+                <div 
+                  class="upload-zone"
+                  :class="{ 'drag-over': isDragOver, 'has-files': files.length > 0 }"
+                  @dragover.prevent="handleDragOver"
+                  @dragleave.prevent="handleDragLeave"
+                  @drop.prevent="handleDrop"
+                  @click="triggerFileInput"
+                >
+                  <input
+                    ref="fileInput"
+                    type="file"
+                    multiple
+                    accept=".pdf,.md,.txt"
+                    @change="handleFileSelect"
+                    style="display: none"
+                    :disabled="loading"
+                  />
+                  
+                  <div v-if="files.length === 0" class="upload-placeholder">
+                    <div class="upload-icon">↑</div>
+                    <div class="upload-title">{{ $t('home.dragToUpload') }}</div>
+                    <div class="upload-hint">{{ $t('home.orBrowse') }}</div>
+                  </div>
+                  
+                  <div v-else class="file-list">
+                    <div v-for="(file, index) in files" :key="index" class="file-item">
+                      <span class="file-icon">📄</span>
+                      <span class="file-name">{{ file.name }}</span>
+                      <button @click.stop="removeFile(index)" class="remove-btn">×</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="input-wrapper">
-                <textarea
-                  v-model="formData.simulationRequirement"
-                  class="code-input"
-                  :placeholder="$t('home.promptPlaceholder')"
-                  rows="6"
-                  :disabled="loading"
-                ></textarea>
-                <div class="model-badge">{{ $t('home.engineBadge') }}</div>
-              </div>
-            </div>
 
-            <!-- 启动按钮 -->
-            <div class="console-section btn-section">
-              <button 
-                class="start-engine-btn"
-                @click="startSimulation"
-                :disabled="!canSubmit || loading"
-              >
-                <span v-if="!loading">{{ $t('home.startEngine') }}</span>
-                <span v-else>{{ $t('home.initializing') }}</span>
-                <span class="btn-arrow">→</span>
-              </button>
+              <!-- Console Divider -->
+              <div class="console-divider">
+                <span>{{ $t('home.inputParams') }}</span>
+              </div>
+
+              <!-- Input Area -->
+              <div class="console-section">
+                <div class="console-header">
+                  <span class="console-label">{{ $t('home.simulationPrompt') }}</span>
+                </div>
+                <div class="input-wrapper">
+                  <textarea
+                    v-model="formData.simulationRequirement"
+                    :placeholder="$t('home.promptPlaceholder')"
+                    class="console-textarea"
+                    rows="4"
+                    :disabled="loading"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Error Message -->
+              <div v-if="error" class="error-message">
+                {{ error }}
+              </div>
+
+              <!-- Action Bar -->
+              <div class="console-action">
+                <div class="action-info">
+                  <span class="pulse-dot"></span>
+                  <span class="engine-text">{{ $t('home.engineBadge') }}</span>
+                </div>
+                <button
+                  class="start-btn"
+                  :class="{ 'is-loading': loading }"
+                  :disabled="!canSubmit || loading"
+                  @click="startSimulation"
+                >
+                  <span v-if="!loading">{{ $t('home.startEngine') }}</span>
+                  <span v-else>{{ $t('home.initializing') }}</span>
+                  <span class="btn-arrow">→</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- 历史项目数据库 -->
-      <HistoryDatabase />
+        <!-- History Projects Database -->
+        <HistoryDatabase />
+      </section>
     </div>
   </div>
 </template>
@@ -214,65 +260,58 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import NoticeToAction from '../components/NoticeToAction.vue'
 import HistoryDatabase from '../components/HistoryDatabase.vue'
 import LanguageSwitcher from '../components/LanguageSwitcher.vue'
 
 const router = useRouter()
 
-// 表单数据
+// Active Navigation Tab: 'notice' (Flagship) or 'sandbox'
+const currentTab = ref('notice')
+
+// Form data for simulation sandbox
 const formData = ref({
   simulationRequirement: ''
 })
 
-// 文件列表
 const files = ref([])
-
-// 状态
 const loading = ref(false)
 const error = ref('')
 const isDragOver = ref(false)
-
-// 文件输入引用
 const fileInput = ref(null)
 
-// 计算属性:是否可以提交
 const canSubmit = computed(() => {
   return formData.value.simulationRequirement.trim() !== '' && files.value.length > 0
 })
 
-// 触发文件选择
 const triggerFileInput = () => {
   if (!loading.value) {
     fileInput.value?.click()
   }
 }
 
-// 处理文件选择
 const handleFileSelect = (event) => {
   const selectedFiles = Array.from(event.target.files)
   addFiles(selectedFiles)
 }
 
-// 处理拖拽相关
-const handleDragOver = (e) => {
+const handleDragOver = () => {
   if (!loading.value) {
     isDragOver.value = true
   }
 }
 
-const handleDragLeave = (e) => {
+const handleDragLeave = () => {
   isDragOver.value = false
 }
 
 const handleDrop = (e) => {
   isDragOver.value = false
   if (loading.value) return
-  
   const droppedFiles = Array.from(e.dataTransfer.files)
   addFiles(droppedFiles)
 }
 
-// 添加文件
 const addFiles = (newFiles) => {
   const validFiles = newFiles.filter(file => {
     const ext = file.name.split('.').pop().toLowerCase()
@@ -281,673 +320,598 @@ const addFiles = (newFiles) => {
   files.value.push(...validFiles)
 }
 
-// 移除文件
 const removeFile = (index) => {
   files.value.splice(index, 1)
 }
 
-// 滚动到底部
-const scrollToBottom = () => {
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: 'smooth'
-  })
-}
-
-// 开始模拟 - 立即跳转，API调用在Process页面进行
-const startSimulation = () => {
+const startSimulation = async () => {
   if (!canSubmit.value || loading.value) return
-  
-  // 存储待上传的数据
-  import('../store/pendingUpload.js').then(({ setPendingUpload }) => {
+  loading.value = true
+  error.value = ''
+
+  try {
+    const { setPendingUpload } = await import('../store/pendingUpload')
     setPendingUpload(files.value, formData.value.simulationRequirement)
-    
-    // 立即跳转到Process页面（使用特殊标识表示新建项目）
-    router.push({
-      name: 'Process',
-      params: { projectId: 'new' }
-    })
-  })
+    router.push({ name: 'Process', params: { projectId: 'new' } })
+  } catch (err) {
+    console.error('Failed to start simulation:', err)
+    error.value = err.message || 'Failed to initialize simulation.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
 <style scoped>
-/* 全局变量与重置 */
 :root {
   --black: #000000;
   --white: #FFFFFF;
   --orange: #FF4500;
+  --gray-bg: #FAFAFA;
   --gray-light: #F5F5F5;
   --gray-text: #666666;
   --border: #E5E5E5;
-  /* 
-    使用 Space Grotesk 作为主要标题字体，JetBrains Mono 作为代码/标签字体
-    确保已在 index.html 引入这些 Google Fonts 
-  */
   --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Space Grotesk', 'Noto Sans SC', system-ui, sans-serif;
-  --font-cn: 'Noto Sans SC', system-ui, sans-serif;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
 }
 
 .home-container {
   min-height: 100vh;
-  background: var(--white);
-  font-family: var(--font-sans);
-  color: var(--black);
+  background: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #0f172a;
 }
 
-/* 顶部导航 */
+/* Navbar */
 .navbar {
-  height: 60px;
-  background: var(--black);
-  color: var(--white);
+  height: 64px;
+  background: #0f172a;
+  color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 32px;
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.nav-brand {
-  font-family: var(--font-mono);
-  font-weight: 800;
-  letter-spacing: 1px;
-  font-size: 1.2rem;
-}
-
-.nav-links {
+.nav-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.github-link {
-  color: var(--white);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  font-weight: 500;
+.nav-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: opacity 0.2s;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.github-link:hover {
-  opacity: 0.8;
+.nav-logo-icon {
+  width: 28px;
+  height: 28px;
 }
 
-.arrow {
-  font-family: sans-serif;
+.brand-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-size: 1.15rem;
+  color: #ffffff;
 }
 
-/* 主要内容区 */
-.main-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 60px 40px;
+.nav-tagline {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  border-left: 1px solid #334155;
+  padding-left: 14px;
+  font-style: italic;
 }
 
-/* Hero 区域 */
-.hero-section {
+@media (max-width: 900px) {
+  .nav-tagline { display: none; }
+}
+
+.nav-center-tabs {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 80px;
-  position: relative;
+  align-items: center;
+  gap: 6px;
+  background: #1e293b;
+  padding: 4px;
+  border-radius: 8px;
 }
 
-.hero-left {
-  flex: 1;
-  padding-right: 60px;
+.tab-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+}
+
+.tab-btn.active {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4);
+}
+
+.tab-icon {
+  font-size: 0.9rem;
+}
+
+.gemma-pill {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.event-link {
+  color: #38bdf8;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.event-link:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: #38bdf8;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* Hero Strip */
+.hero-strip {
+  margin-bottom: 28px;
 }
 
 .tag-row {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
-.orange-tag {
-  background: var(--orange);
-  color: var(--white);
-  padding: 4px 10px;
+.hackathon-tag {
+  background: #0f172a;
+  color: #f59e0b;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
 }
 
-.version-text {
-  color: #999;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+.gemma-prize-tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
 }
 
-.main-title {
-  font-size: 4.5rem;
-  line-height: 1.2;
-  font-weight: 500;
-  margin: 0 0 40px 0;
-  letter-spacing: -2px;
-  color: var(--black);
+.main-hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+  margin: 0 0 10px 0;
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #000000 0%, #444444 100%);
+  background: linear-gradient(90deg, #0284c7 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  display: inline-block;
 }
 
-.hero-desc {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: var(--gray-text);
-  max-width: 640px;
-  margin-bottom: 50px;
-  font-weight: 400;
-  text-align: justify;
+.hero-strip-desc {
+  font-size: 1rem;
+  color: #64748b;
+  max-width: 720px;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.hero-desc p {
-  margin-bottom: 1.5rem;
+/* Sandbox Section */
+.sandbox-hero {
+  margin-bottom: 30px;
 }
 
-.highlight-bold {
-  color: var(--black);
+.sandbox-tag {
+  background: #f1f5f9;
+  color: #475569;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
   font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
 }
 
-.highlight-orange {
-  color: var(--orange);
+.version-text {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.sandbox-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem;
   font-weight: 700;
-  font-family: var(--font-mono);
+  color: #0f172a;
+  margin: 8px 0;
 }
 
-.highlight-code {
-  background: rgba(0, 0, 0, 0.05);
-  padding: 2px 6px;
-  border-radius: 2px;
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  color: var(--black);
-  font-weight: 600;
+.sandbox-desc {
+  font-size: 0.95rem;
+  color: #64748b;
+  max-width: 700px;
+  line-height: 1.5;
 }
 
-.slogan-text {
-  font-size: 1.2rem;
-  font-weight: 520;
-  color: var(--black);
-  letter-spacing: 1px;
-  border-left: 3px solid var(--orange);
-  padding-left: 15px;
-  margin-top: 20px;
-}
-
-.blinking-cursor {
-  color: var(--orange);
-  animation: blink 1s step-end infinite;
-  font-weight: 700;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.decoration-square {
-  width: 16px;
-  height: 16px;
-  background: var(--orange);
-}
-
-.hero-right {
-  flex: 0.8;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.logo-container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 40px;
-}
-
-.hero-logo {
-  max-width: 500px; /* 调整logo大小 */
-  width: 100%;
-}
-
-.scroll-down-btn {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--border);
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--orange);
-  font-size: 1.2rem;
-  transition: all 0.2s;
-}
-
-.scroll-down-btn:hover {
-  border-color: var(--orange);
-}
-
-/* Dashboard 双栏布局 */
+/* Dashboard Section (Sandbox) */
 .dashboard-section {
-  display: flex;
-  gap: 60px;
-  border-top: 1px solid var(--border);
-  padding-top: 60px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
 }
 
-.dashboard-section .left-panel,
-.dashboard-section .right-panel {
-  display: flex;
-  flex-direction: column;
+@media (max-width: 900px) {
+  .dashboard-section {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* 左侧面板 */
 .left-panel {
-  flex: 0.8;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
 }
 
 .panel-header {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #999;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 6px;
 }
 
 .status-dot {
-  color: var(--orange);
-  font-size: 0.8rem;
+  color: #10b981;
 }
 
 .section-title {
-  font-size: 2rem;
-  font-weight: 520;
-  margin: 0 0 15px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
 }
 
 .section-desc {
-  color: var(--gray-text);
-  margin-bottom: 25px;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 .metrics-row {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .metric-card {
-  border: 1px solid var(--border);
-  padding: 20px 30px;
-  min-width: 150px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
 }
 
 .metric-value {
-  font-family: var(--font-mono);
-  font-size: 1.8rem;
-  font-weight: 520;
-  margin-bottom: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0284c7;
 }
 
 .metric-label {
-  font-size: 0.85rem;
-  color: #999;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 2px;
 }
 
-/* 项目模拟步骤介绍 */
 .steps-container {
-  border: 1px solid var(--border);
-  padding: 30px;
-  position: relative;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
 }
 
 .steps-header {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #999;
-  margin-bottom: 25px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .diamond-icon {
-  font-size: 1.2rem;
-  line-height: 1;
+  color: #0284c7;
 }
 
 .workflow-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .workflow-item {
   display: flex;
   align-items: flex-start;
-  gap: 20px;
+  gap: 10px;
 }
 
 .step-num {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: var(--black);
-  opacity: 0.3;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
 .step-info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .step-title {
-  font-weight: 520;
-  font-size: 1rem;
-  margin-bottom: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f172a;
 }
 
 .step-desc {
-  font-size: 0.85rem;
-  color: var(--gray-text);
+  font-size: 0.75rem;
+  color: #64748b;
 }
 
-/* 右侧交互控制台 */
+/* Right Panel Console */
 .right-panel {
-  flex: 1.2;
+  display: flex;
+  flex-direction: column;
 }
 
 .console-box {
-  border: 1px solid #CCC; /* 外部实线 */
-  padding: 8px; /* 内边距形成双重边框感 */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
 }
 
 .console-section {
-  padding: 20px;
-}
-
-.console-section.btn-section {
-  padding-top: 0;
+  margin-bottom: 16px;
 }
 
 .console-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
-  font-family: var(--font-mono);
+  margin-bottom: 8px;
+}
+
+.console-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.console-meta {
   font-size: 0.75rem;
-  color: #666;
+  color: #94a3b8;
 }
 
 .upload-zone {
-  border: 1px dashed #CCC;
-  height: 200px;
-  overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  background: #FAFAFA;
-}
-
-.upload-zone.has-files {
-  align-items: flex-start;
-}
-
-.upload-zone:hover {
-  background: #F0F0F0;
-  border-color: #999;
-}
-
-.upload-placeholder {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 24px;
   text-align: center;
+  cursor: pointer;
+  background: #f8fafc;
+  transition: all 0.2s;
+}
+
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: #0284c7;
+  background: #f0f9ff;
 }
 
 .upload-icon {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #DDD;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 15px;
-  color: #999;
+  font-size: 1.5rem;
+  color: #0284c7;
+  margin-bottom: 4px;
 }
 
 .upload-title {
-  font-weight: 500;
-  font-size: 0.9rem;
-  margin-bottom: 5px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1e293b;
 }
 
 .upload-hint {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: #999;
+  font-size: 0.78rem;
+  color: #64748b;
 }
 
 .file-list {
-  width: 100%;
-  padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .file-item {
   display: flex;
   align-items: center;
-  background: var(--white);
-  padding: 8px 12px;
-  border: 1px solid #EEE;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.82rem;
 }
 
 .file-name {
-  flex: 1;
-  margin: 0 10px;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .remove-btn {
   background: none;
   border: none;
+  color: #ef4444;
   cursor: pointer;
-  font-size: 1.2rem;
-  color: #999;
+  font-size: 1rem;
 }
 
 .console-divider {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.console-divider::before,
-.console-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #EEE;
+  border-top: 1px solid #e2e8f0;
+  margin: 16px 0;
+  text-align: center;
+  position: relative;
 }
 
 .console-divider span {
-  padding: 0 15px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: #BBB;
-  letter-spacing: 1px;
-}
-
-.input-wrapper {
   position: relative;
-  border: 1px solid #DDD;
-  background: #FAFAFA;
-}
-
-.code-input {
-  width: 100%;
-  border: none;
-  background: transparent;
-  padding: 20px;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  resize: vertical;
-  outline: none;
-  min-height: 150px;
-}
-
-.model-badge {
-  position: absolute;
-  bottom: 10px;
-  right: 15px;
-  font-family: var(--font-mono);
+  top: -10px;
+  background: #ffffff;
+  padding: 0 10px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: #AAA;
+  color: #94a3b8;
 }
 
-.start-engine-btn {
+.console-textarea {
   width: 100%;
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  padding: 20px;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1.1rem;
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: #0f172a;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.console-textarea:focus {
+  outline: none;
+  border-color: #0284c7;
+}
+
+.console-action {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 16px;
+}
+
+.action-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.engine-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.start-btn {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
 }
 
-/* 可点击状态（非禁用） */
-.start-engine-btn:not(:disabled) {
-  background: var(--black);
-  border: 1px solid var(--black);
-  animation: pulse-border 2s infinite;
+.start-btn:hover:not(:disabled) {
+  background: #0369a1;
 }
 
-.start-engine-btn:hover:not(:disabled) {
-  background: var(--orange);
-  border-color: var(--orange);
-  transform: translateY(-2px);
-}
-
-.start-engine-btn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.start-engine-btn:disabled {
-  background: #E5E5E5;
-  color: #999;
+.start-btn:disabled {
+  background: #cbd5e1;
   cursor: not-allowed;
-  transform: none;
-  border: 1px solid #E5E5E5;
 }
 
-/* 引导动画：微妙的边框脉冲 */
-@keyframes pulse-border {
-  0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2); }
-  70% { box-shadow: 0 0 0 6px rgba(0, 0, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
-}
-
-/* 响应式适配 */
-@media (max-width: 1024px) {
-  .dashboard-section {
-    flex-direction: column;
-  }
-  
-  .hero-section {
-    flex-direction: column;
-  }
-  
-  .hero-left {
-    padding-right: 0;
-    margin-bottom: 40px;
-  }
-  
-  .hero-logo {
-    max-width: 200px;
-    margin-bottom: 20px;
-  }
-}
-</style>
-
-<style>
-/* English locale adjustments (unscoped to target html[lang]) */
-html[lang="en"] .main-title {
-  font-size: 3.5rem;
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: -1px;
-}
-
-html[lang="en"] .hero-desc {
-  text-align: left;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-html[lang="en"] .slogan-text {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: 0;
-}
-
-html[lang="en"] .tag-row {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-html[lang="en"] .navbar .nav-links {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-/* Left pane: system status + workflow */
-html[lang="en"] .status-section {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-html[lang="en"] .status-section .status-ready {
-  font-size: 1.6rem;
-}
-
-html[lang="en"] .status-section .metric-value {
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 1.4rem;
-}
-
-html[lang="en"] .workflow-list .step-title {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-html[lang="en"] .workflow-list .step-desc {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-  font-size: 0.72rem !important;
-  line-height: 1.4 !important;
-}
-
-html[lang="en"] .workflow-list {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+.error-message {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 8px;
 }
 </style>
