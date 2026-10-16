@@ -90,55 +90,57 @@ def clean_step3_simulation():
 
 def clean_step4_report():
     path = 'frontend/src/components/Step4Report.vue'
-    with open(path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Replace UI texts and comments
-    content = content.replace("h('div', { class: 'reason-label' }, '选择理由')", "h('div', { class: 'reason-label' }, 'Selection Reason')")
-    content = content.replace("return steps[0] || { noLabel: '--', title: '等待开始', status: 'todo', meta: '' }", "return steps[0] || { noLabel: '--', title: 'Waiting to start', status: 'todo', meta: '' }")
-    content = content.replace("icon: 'lightbulb' // 灯泡图标 - 代表洞察", "icon: 'lightbulb' // Lightbulb icon - insights")
-    content = content.replace("icon: 'globe' // 地球图标 - 代表全景搜索", "icon: 'globe' // Globe icon - panorama search")
-    content = content.replace("icon: 'users' // 用户图标 - 代表对话", "icon: 'users' // Users icon - interviews")
-    content = content.replace("icon: 'zap' // 闪电图标 - 代表快速", "icon: 'zap' // Zap icon - quick summary")
-    content = content.replace("icon: 'chart' // 图表图标 - 代表统计", "icon: 'chart' // Chart icon - statistics")
-    content = content.replace("icon: 'database' // 数据库图标 - 代表实体", "icon: 'database' // Database icon - entities")
-    content = content.replace("/* 深灰色，不随状态变化 */", "/* Dark gray, fixed */")
-    content = content.replace("currentSectionIndex.value = null  // 确保清除 loading 状态", "currentSectionIndex.value = null  // Clear loading state")
-    content = content.replace("if (log.includes('ERROR') || log.includes('错误')) return 'error'", "if (log.includes('ERROR') || log.includes('Error')) return 'error'")
-    content = content.replace("if (log.includes('WARNING') || log.includes('警告')) return 'warning'", "if (log.includes('WARNING') || log.includes('Warning')) return 'warning'")
-
-    # Regex support for bilingual matching in Step4Report so both English and legacy Chinese format parse cleanly
-    content = re.sub(r'text\.match\(/分析问题:\\s\*\(\.\+\?\)\(\?:\\n\|\$\)/\)', r'text.match(/(?:Analysis Question|分析问题):\\s*(.+?)(?:\\n|$)/i)', content)
-    content = re.sub(r'text\.match\(/预测场景:\\s\*\(\.\+\?\)\(\?:\\n\|\$\)/\)', r'text.match(/(?:Scenario|预测场景):\\s*(.+?)(?:\\n|$)/i)', content)
-    content = re.sub(r'text\.match\(/相关预测事实:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Relevant Facts|相关预测事实):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/涉及实体:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Entities Involved|涉及实体):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/关系链:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Relationship Chain|关系链):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/### 分析的子问题\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:Sub-questions Analyzed|分析的子问题)\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/### 【关键事实】\[\\s\\S\]\*\?\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:【Key Facts】|【关键事实】)[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/### 【核心实体】\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:【Core Entities】|【核心实体】)\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/### 【关系链】\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:【Relationship Chain】|【关系链】)\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/查询:\\s\*\(\.\+\?\)\(\?:\\n\|\$\)/\)', r'text.match(/(?:Query|查询):\\s*(.+?)(?:\\n|$)/i)', content)
-    content = re.sub(r'text\.match\(/总节点数:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Total Nodes|总节点数):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/总边数:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Total Edges|总边数):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/当前有效事实:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Active Facts|当前有效事实):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/历史\\/过期事实:\\s\*\\(\\d\+\\\)/\)', r'text.match(/(?:Historical Facts|历史\\/过期事实):\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/### 【当前有效事实】\[\\s\\S\]\*\?\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:【Active Facts】|【当前有效事实】)[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/### 【历史\\/过期事实】\[\\s\\S\]\*\?\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:【Historical Facts】|【历史\\/过期事实】)[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/### 【涉及实体】\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:【Involved Entities】|【涉及实体】)\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/\\\*\\\*采访主题:\\\*\\\*\\s\*\(\.\+\?\)\(\?:\\n\|\$\)/\)', r'text.match(/\\*\\*(?:Interview Topic|采访主题):\\*\\*\\s*(.+?)(?:\\n|$)/i)', content)
-    content = re.sub(r'text\.match\(/\\\*\\\*采访人数:\\\*\\\*\\s\*\\(\\d\+\\\)\\s\*\\/\\s\*\\(\\d\+\\\)/\)', r'text.match(/\\*\\*(?:Interviewees|采访人数):\\*\\*\\s*(\\d+)\\s*\\/\\s*(\\d+)/i)', content)
-    content = re.sub(r'text\.match\(/### 采访对象选择理由\\n\(\[\\s\\S\]\*\?\)\(\?=\\n---\\n\|\\n### 采访实录\)/\)', r'text.match(/### (?:Interview Selection Reasons|采访对象选择理由)\\n([\\s\\S]*?)(?=\\n---\\n|\\n### (?:Interview Transcript|采访实录))/i)', content)
-    content = re.sub(r'text\.match\(/### 采访摘要与核心观点\\n\(\[\\s\\S\]\*\?\)\$\/\)', r'text.match(/### (?:Interview Summary & Core Views|采访摘要与核心观点)\\n([\\s\\S]*?)$/i)', content)
-    content = re.sub(r'text\.match\(/搜索查询:\\s\*\(\.\+\?\)\(\?:\\n\|\$\)/\)', r'text.match(/(?:Search Query|搜索查询):\\s*(.+?)(?:\\n|$)/i)', content)
-    content = re.sub(r'text\.match\(/找到\\s\*\\(\\d\+\\\)\\s\*条/\)', r'text.match(/(?:Found|找到)\\s*(\\d+)\\s*(?:results|条)/i)', content)
-    content = re.sub(r'text\.match\(/### 相关事实:\\n\(\[\\s\\S\]\*\)\$\/\)', r'text.match(/### (?:Relevant Facts|相关事实):\\n([\\s\\S]*)$/i)', content)
-    content = re.sub(r'text\.match\(/### 相关边:\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:Relevant Edges|相关边):\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'text\.match\(/### 相关节点:\\n\(\[\\s\\S\]\*\?\)\(\?=\\n###\|\$\)/\)', r'text.match(/### (?:Relevant Nodes|相关节点):\\n([\\s\\S]*?)(?=\\n###|$)/i)', content)
-    content = re.sub(r'response\.match\(/最终答案\[:：\]\\s\*\\n\*\(\[\\s\\S\]\*\)\$/i\)', r'response.match(/(?:Final Answer|最终答案)[:：]\\s*\\n*([\\s\\S]*)$/i)', content)
-
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print(f"Cleaned {path}")
+    replacements = [
+        ("h('div', { class: 'reason-label' }, '选择理由')", "h('div', { class: 'reason-label' }, 'Selection Reason')"),
+        ("return steps[0] || { noLabel: '--', title: '等待开始', status: 'todo', meta: '' }", "return steps[0] || { noLabel: '--', title: 'Waiting to start', status: 'todo', meta: '' }"),
+        ("icon: 'lightbulb' // 灯泡图标 - 代表洞察", "icon: 'lightbulb' // Lightbulb icon - insights"),
+        ("icon: 'globe' // 地球图标 - 代表全景搜索", "icon: 'globe' // Globe icon - panorama search"),
+        ("icon: 'users' // 用户图标 - 代表对话", "icon: 'users' // Users icon - interviews"),
+        ("icon: 'zap' // 闪电图标 - 代表快速", "icon: 'zap' // Zap icon - quick summary"),
+        ("icon: 'chart' // 图表图标 - 代表统计", "icon: 'chart' // Chart icon - statistics"),
+        ("icon: 'database' // 数据库图标 - 代表实体", "icon: 'database' // Database icon - entities"),
+        ("/* 深灰色，不随状态变化 */", "/* Dark gray, fixed */"),
+        ("currentSectionIndex.value = null  // 确保清除 loading 状态", "currentSectionIndex.value = null  // Clear loading state"),
+        ("if (log.includes('ERROR') || log.includes('错误')) return 'error'", "if (log.includes('ERROR') || log.includes('Error')) return 'error'"),
+        ("if (log.includes('WARNING') || log.includes('警告')) return 'warning'", "if (log.includes('WARNING') || log.includes('Warning')) return 'warning'"),
+        ("<!-- Next Step Button - 在完成后显示 -->", "<!-- Next Step Button - show on completion -->"),
+        ("<!-- Section Content Generated (内容生成完成，但整个章节可能还没完成) -->", "<!-- Section Content Generated -->"),
+        ("<!-- Section Complete (章节生成完成) -->", "<!-- Section Complete -->"),
+        ("<!-- 当是最终答案时，显示特殊提示 -->", "<!-- Final answer notice -->"),
+        ("// 保存按钮相对于视口的位置", "// Save button position relative to viewport"),
+        ("// 切换状态", "// Toggle state"),
+        ("// 等待 DOM 更新后，调整滚动位置以保持按钮在相同位置", "// Adjust scroll position after DOM update"),
+        ("// 调整滚动位置", "// Adjust scroll position"),
+        ("// 只有已完成的章节才能折叠", "// Only completed sections can be collapsed"),
+        ("const queryMatch = text.match(/分析问题:\\s*(.+?)(?:\\n|$)/)", "const queryMatch = text.match(/(?:Analysis Question|分析问题):\\s*(.+?)(?:\\n|$)/i)"),
+        ("const reqMatch = text.match(/预测场景:\\s*(.+?)(?:\\n|$)/)", "const reqMatch = text.match(/(?:Scenario|预测场景):\\s*(.+?)(?:\\n|$)/i)"),
+        ("const factMatch = text.match(/相关预测事实:\\s*(\\d+)/)", "const factMatch = text.match(/(?:Relevant Facts|相关预测事实):\\s*(\\d+)/i)"),
+        ("const entityMatch = text.match(/涉及实体:\\s*(\\d+)/)", "const entityMatch = text.match(/(?:Entities Involved|涉及实体):\\s*(\\d+)/i)"),
+        ("const relMatch = text.match(/关系链:\\s*(\\d+)/)", "const relMatch = text.match(/(?:Relationship Chain|关系链):\\s*(\\d+)/i)"),
+        ("const subQSection = text.match(/### 分析的子问题\\n([\\s\\S]*?)(?=\\n###|$)/)", "const subQSection = text.match(/### (?:Sub-questions Analyzed|分析的子问题)\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const factsSection = text.match(/### 【关键事实】[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/)", "const factsSection = text.match(/### (?:【Key Facts】|【关键事实】)[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const entitySection = text.match(/### 【核心实体】\\n([\\s\\S]*?)(?=\\n###|$)/)", "const entitySection = text.match(/### (?:【Core Entities】|【核心实体】)\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const relSection = text.match(/### 【关系链】\\n([\\s\\S]*?)(?=\\n###|$)/)", "const relSection = text.match(/### (?:【Relationship Chain】|【关系链】)\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const queryMatch = text.match(/查询:\\s*(.+?)(?:\\n|$)/)", "const queryMatch = text.match(/(?:Query|查询):\\s*(.+?)(?:\\n|$)/i)"),
+        ("const nodesMatch = text.match(/总节点数:\\s*(\\d+)/)", "const nodesMatch = text.match(/(?:Total Nodes|总节点数):\\s*(\\d+)/i)"),
+        ("const edgesMatch = text.match(/总边数:\\s*(\\d+)/)", "const edgesMatch = text.match(/(?:Total Edges|总边数):\\s*(\\d+)/i)"),
+        ("const activeMatch = text.match(/当前有效事实:\\s*(\\d+)/)", "const activeMatch = text.match(/(?:Active Facts|当前有效事实):\\s*(\\d+)/i)"),
+        ("const histMatch = text.match(/历史\\/过期事实:\\s*(\\d+)/)", "const histMatch = text.match(/(?:Historical Facts|历史\\/过期事实):\\s*(\\d+)/i)"),
+        ("const activeSection = text.match(/### 【当前有效事实】[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/)", "const activeSection = text.match(/### (?:【Active Facts】|【当前有效事实】)[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const histSection = text.match(/### 【历史\\/过期事实】[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/)", "const histSection = text.match(/### (?:【Historical Facts】|【历史\\/过期事实】)[\\s\\S]*?\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const entitySection = text.match(/### 【涉及实体】\\n([\\s\\S]*?)(?=\\n###|$)/)", "const entitySection = text.match(/### (?:【Involved Entities】|【涉及实体】)\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const topicMatch = text.match(/\\*\\*采访主题:\\*\\*\\s*(.+?)(?:\\n|$)/)", "const topicMatch = text.match(/\\*\\*(?:Interview Topic|采访主题):\\*\\*\\s*(.+?)(?:\\n|$)/i)"),
+        ("const countMatch = text.match(/\\*\\*采访人数:\\*\\*\\s*(\\d+)\\s*\\/\\s*(\\d+)/)", "const countMatch = text.match(/\\*\\*(?:Interviewees|采访人数):\\*\\*\\s*(\\d+)\\s*\\/\\s*(\\d+)/i)"),
+        ("const reasonMatch = text.match(/### 采访对象选择理由\\n([\\s\\S]*?)(?=\\n---\\n|\\n### 采访实录)/)", "const reasonMatch = text.match(/### (?:Interview Selection Reasons|采访对象选择理由)\\n([\\s\\S]*?)(?=\\n---\\n|\\n### (?:Interview Transcript|采访实录))/i)"),
+        ("const summaryMatch = text.match(/### 采访摘要与核心观点\\n([\\s\\S]*?)$/)", "const summaryMatch = text.match(/### (?:Interview Summary & Core Views|采访摘要与核心观点)\\n([\\s\\S]*?)$/i)"),
+        ("const queryMatch = text.match(/搜索查询:\\s*(.+?)(?:\\n|$)/)", "const queryMatch = text.match(/(?:Search Query|搜索查询):\\s*(.+?)(?:\\n|$)/i)"),
+        ("const countMatch = text.match(/找到\\s*(\\d+)\\s*条/)", "const countMatch = text.match(/(?:Found|找到)\\s*(\\d+)\\s*(?:results|条)/i)"),
+        ("const factsSection = text.match(/### 相关事实:\\n([\\s\\S]*)$/)", "const factsSection = text.match(/### (?:Relevant Facts|相关事实):\\n([\\s\\S]*)$/i)"),
+        ("const edgesSection = text.match(/### 相关边:\\n([\\s\\S]*?)(?=\\n###|$)/)", "const edgesSection = text.match(/### (?:Relevant Edges|相关边):\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const nodesSection = text.match(/### 相关节点:\\n([\\s\\S]*?)(?=\\n###|$)/)", "const nodesSection = text.match(/### (?:Relevant Nodes|相关节点):\\n([\\s\\S]*?)(?=\\n###|$)/i)"),
+        ("const chineseFinalMatch = response.match(/最终答案[:：]\\s*\\n*([\\s\\S]*)$/i)", "const chineseFinalMatch = response.match(/(?:Final Answer|最终答案)[:：]\\s*\\n*([\\s\\S]*)$/i)")
+    ]
+    clean_file(path, replacements)
 
 def clean_step5_interaction():
     path = 'frontend/src/components/Step5Interaction.vue'
