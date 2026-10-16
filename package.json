@@ -1,7 +1,7 @@
 {
   "name": "campuspulse-ai",
   "version": "0.1.0",
-  "description": "CampusPulse AI - AI-powered campus information assistant using Gemma 4",
+  "description": "CampusPulse AI - Multimodal Campus Notice-to-Action & Swarm Decision Intelligence",
   "scripts": {
     "setup": "npm install && cd frontend && npm install",
     "setup:backend": "cd backend && uv sync",
