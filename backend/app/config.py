@@ -6,15 +6,16 @@ Unified configuration loader for CampusPulse AI
 import os
 from dotenv import load_dotenv
 
-# Load .env file from project root
-# Path: CampusPulse AI/.env (relative to backend/app/config.py)
-project_root_env = os.path.join(os.path.dirname(__file__), '../../.env')
+# Load .env file from project root or backend directory
+project_root_env = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../.env'))
+backend_env = os.path.abspath(os.path.join(os.path.dirname(__file__), '../.env'))
 
-if os.path.exists(project_root_env):
-    load_dotenv(project_root_env, override=True)
-else:
-    # Load from system environment variables
-    load_dotenv(override=True)
+for env_path in [project_root_env, backend_env]:
+    if os.path.exists(env_path):
+        load_dotenv(env_path, override=True)
+
+# Also load from system environment variables / default .env in cwd
+load_dotenv(override=True)
 
 
 class Config:

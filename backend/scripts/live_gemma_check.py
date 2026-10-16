@@ -1,5 +1,12 @@
 import os
 import json
+from dotenv import load_dotenv
+
+# Load .env from project root or backend
+load_dotenv(os.path.join(os.path.dirname(__file__), '../../.env'))
+load_dotenv(os.path.join(os.path.dirname(__file__), '../.env'))
+load_dotenv()
+
 from google import genai
 from google.genai import types
 from PIL import Image, ImageDraw, ImageFont
