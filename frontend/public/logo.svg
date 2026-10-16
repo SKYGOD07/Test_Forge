@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <rect width="48" height="48" rx="12" fill="#0F172A"/>
+  <!-- Graduation / Campus Cap outline -->
+  <path d="M24 10L38 17L24 24L10 17L24 10Z" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 19.5V28C14 31 18.5 33.5 24 33.5C29.5 33.5 34 31 34 28V19.5" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M38 17V26" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Pulse Line Accent -->
+  <path d="M8 38H16L19 33L23 42L27 35L30 38H40" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
