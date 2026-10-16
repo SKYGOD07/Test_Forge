@@ -1,14 +1,20 @@
 services:
-  mirofish:
-    image: ghcr.io/666ghj/mirofish:latest
-    # 加速镜像（如拉取缓慢可替换上方地址）
-    # image: ghcr.nju.edu.cn/666ghj/mirofish:latest
-    container_name: mirofish
+  campuspulse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: campuspulse-ai:local
+    container_name: campuspulse
     env_file:
-      - .env
+      - path: .env
+        required: false
+    environment:
+      FLASK_DEBUG: "false"
     ports:
       - "3000:3000"
-      - "5001:5001"
+    expose:
+      - "3000"
+      - "5001"
     restart: unless-stopped
     volumes:
       - ./backend/uploads:/app/backend/uploads
