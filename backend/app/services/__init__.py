@@ -1,5 +1,5 @@
 """
-业务服务模块
+Business services module for CampusPulse AI
 """
 
 from .ontology_generator import OntologyGenerator

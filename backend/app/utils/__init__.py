@@ -1,5 +1,5 @@
 """
-工具模块
+Utility module for CampusPulse AI
 """
 
 from .file_parser import FileParser
