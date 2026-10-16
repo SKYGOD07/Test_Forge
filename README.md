@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="CampusPulse AI Banner" width="85%"/>
+<img src="./static/image/campuspulse-banner.jpeg" alt="CampusPulse AI Banner" width="85%"/>
 
 ### CampusPulse AI — Multimodal Campus Notice-to-Action & Swarm Decision Intelligence
 
@@ -14,7 +14,7 @@
 [![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.html)
 
-[English](./README.md) | [中文说明](./README-ZH.md) | [Gemma 4 Assessment & Architecture](./Docs/GEMMA4_ASSESSMENT.md)
+[Gemma 4 Assessment & Architecture](./Docs/GEMMA4_ASSESSMENT.md)
 
 </div>
 
@@ -45,33 +45,12 @@
 
 ---
 
-## 📸 System Screenshots
-
-<div align="center">
-<table>
-<tr>
-<td><img src="./static/image/Screenshot/screenshot-1.png" alt="CampusPulse AI Home" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-2.png" alt="Graph Relationship Visualization" width="100%"/></td>
-</tr>
-<tr>
-<td><img src="./static/image/Screenshot/screenshot-3.png" alt="Environment Setup & Persona Generation" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-4.png" alt="Dual-Platform Simulation" width="100%"/></td>
-</tr>
-<tr>
-<td><img src="./static/image/Screenshot/screenshot-5.png" alt="Comprehensive Prediction Report" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-6.png" alt="Deep Agent Interaction" width="100%"/></td>
-</tr>
-</table>
-</div>
-
----
-
 ## 🎬 Demo Showcase
 
 ### 1. Campus Notice-to-Action Intelligence (Gemma 4 Multimodal Demo)
 
 <div align="center">
-<img src="./static/image/wuhan-university-simulation-cover.png" alt="CampusPulse AI Notice-to-Action Demo" width="80%"/>
+<img src="./static/image/campuspulse-notice-to-action-demo.png" alt="CampusPulse AI Notice-to-Action Demo" width="80%"/>
 
 *Instant visual notice extraction and action checklist generation powered by Google Gemma 4 via Gemini API.*
 </div>
@@ -79,7 +58,7 @@
 ### 2. Multi-Agent Campus Swarm Simulation & Policy Sandbox
 
 <div align="center">
-<img src="./static/image/red-chamber-simulation-cover.jpg" alt="Campus Swarm Simulation Demo" width="80%"/>
+<img src="./static/image/campuspulse-swarm-simulation-demo.jpg" alt="Campus Swarm Simulation Demo" width="80%"/>
 
 *High-fidelity multi-agent simulation predicting student community sentiment, event turnout, and policy response.*
 </div>
@@ -182,8 +161,8 @@ GEMMA_MODEL_NAME=gemma-4-26b-a4b-it
 # Optional: Multi-Agent Simulation & Zep Cloud Memory
 # =================================================================
 LLM_API_KEY=your_openai_compatible_api_key
-LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
-LLM_MODEL_NAME=qwen-plus
+LLM_BASE_URL=https://api.openai.com/v1
+LLM_MODEL_NAME=gpt-4o-mini
 ZEP_API_KEY=your_zep_api_key
 ```
 
