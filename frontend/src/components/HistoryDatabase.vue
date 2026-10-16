@@ -4,20 +4,20 @@
     :class="{ 'no-projects': projects.length === 0 && !loading }"
     ref="historyContainer"
   >
-    <!-- 背景装饰：技术网格线（只在有项目时显示） -->
+    <!-- Background decoration: grid lines (shown only when projects exist) -->
     <div v-if="projects.length > 0 || loading" class="tech-grid-bg">
       <div class="grid-pattern"></div>
       <div class="gradient-overlay"></div>
     </div>
 
-    <!-- 标题区域 -->
+    <!-- Title Area -->
     <div class="section-header">
       <div class="section-line"></div>
       <span class="section-title">{{ $t('history.title') }}</span>
       <div class="section-line"></div>
     </div>
 
-    <!-- 卡片容器（只在有项目时显示） -->
+    <!-- Card container (shown only when projects exist) -->
     <div v-if="projects.length > 0" class="cards-container" :class="{ expanded: isExpanded }" :style="containerStyle">
       <div 
         v-for="(project, index) in projects" 
@@ -29,7 +29,7 @@
         @mouseleave="hoveringCard = null"
         @click="navigateToProject(project)"
       >
-        <!-- 卡片头部：simulation_id 和 功能可用状态 -->
+        <!-- Card header: simulation_id and feature status -->
         <div class="card-header">
           <span class="card-id">{{ formatSimulationId(project.simulation_id) }}</span>
           <div class="card-status-icons">
@@ -50,12 +50,12 @@
           </div>
         </div>
 
-        <!-- 文件列表区域 -->
+        <!-- File list area -->
         <div class="card-files-wrapper">
-          <!-- 角落装饰 - 取景框风格 -->
+          <!-- Corner decoration -->
           <div class="corner-mark top-left-only"></div>
           
-          <!-- 文件列表 -->
+          <!-- File list -->
           <div class="files-list" v-if="project.files && project.files.length > 0">
             <div 
               v-for="(file, fileIndex) in project.files.slice(0, 3)" 
@@ -65,19 +65,19 @@
               <span class="file-tag" :class="getFileType(file.filename)">{{ getFileTypeLabel(file.filename) }}</span>
               <span class="file-name">{{ truncateFilename(file.filename, 20) }}</span>
             </div>
-            <!-- 如果有更多文件，显示提示 -->
+            <!-- Hint if more files exist -->
             <div v-if="project.files.length > 3" class="files-more">
               {{ $t('history.moreFiles', { count: project.files.length - 3 }) }}
             </div>
           </div>
-          <!-- 无文件时的占位 -->
+          <!-- Placeholder when no files exist -->
           <div class="files-empty" v-else>
             <span class="empty-file-icon">◇</span>
             <span class="empty-file-text">{{ $t('history.noFiles') }}</span>
           </div>
         </div>
 
-        <!-- 卡片标题（使用模拟需求的前20字作为标题） -->
+        <!-- Card title -->
         <h3 class="card-title">{{ getSimulationTitle(project.simulation_requirement) }}</h3>
 
         <!-- 卡片描述（模拟需求完整展示） -->
@@ -130,7 +130,7 @@
                 <div class="modal-requirement">{{ selectedProject.simulation_requirement || $t('common.none') }}</div>
               </div>
 
-              <!-- 文件列表 -->
+              <!-- File list -->
               <div class="modal-section">
                 <div class="modal-label">{{ $t('history.relatedFiles') }}</div>
                 <div class="modal-files" v-if="selectedProject.files && selectedProject.files.length > 0">
@@ -206,11 +206,11 @@ const loading = ref(true)
 const isExpanded = ref(false)
 const hoveringCard = ref(null)
 const historyContainer = ref(null)
-const selectedProject = ref(null)  // 当前选中的项目（用于弹窗）
+const selectedProject = ref(null)  // Currently selected project
 let observer = null
-let isAnimating = false  // 动画锁，防止闪烁
-let expandDebounceTimer = null  // 防抖定时器
-let pendingState = null  // 记录待执行的目标状态
+let isAnimating = false  // Animation lock to prevent flicker
+let expandDebounceTimer = null  // Debounce timer
+let pendingState = null  // Pending target state
 
 // 卡片布局配置 - 调整为更宽的比例
 const CARDS_PER_ROW = 4
@@ -451,7 +451,7 @@ const loadHistory = async () => {
       projects.value = response.data || []
     }
   } catch (error) {
-    console.error('加载历史项目失败:', error)
+    console.error('Failed to load project history:', error)
     projects.value = []
   } finally {
     loading.value = false
@@ -729,9 +729,9 @@ onUnmounted(() => {
 }
 
 /* 不同功能的颜色 */
-.status-icon:nth-child(1).available { color: #3B82F6; } /* 图谱构建 - 蓝色 */
-.status-icon:nth-child(2).available { color: #F59E0B; } /* 环境搭建 - 橙色 */
-.status-icon:nth-child(3).available { color: #10B981; } /* 分析报告 - 绿色 */
+.status-icon:nth-child(1).available { color: #3B82F6; } /* Graph Construction - Blue */
+.status-icon:nth-child(2).available { color: #F59E0B; } /* Environment Setup - Orange */
+.status-icon:nth-child(3).available { color: #10B981; } /* Analysis Report - Green */
 
 .status-icon.unavailable {
   color: #D1D5DB;
@@ -753,9 +753,9 @@ onUnmounted(() => {
 }
 
 /* 进度状态颜色 */
-.card-progress.completed { color: #10B981; }    /* 已完成 - 绿色 */
-.card-progress.in-progress { color: #F59E0B; }  /* 进行中 - 橙色 */
-.card-progress.not-started { color: #9CA3AF; }  /* 未开始 - 灰色 */
+.card-progress.completed { color: #10B981; }    /* Completed - Green */
+.card-progress.in-progress { color: #F59E0B; }  /* In Progress - Orange */
+.card-progress.not-started { color: #9CA3AF; }  /* Not Started - Gray */
 .card-status.pending { color: #9CA3AF; }
 
 /* 文件列表区域 */

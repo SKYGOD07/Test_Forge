@@ -3,7 +3,7 @@
     <!-- Top Control Bar -->
     <div class="control-bar">
       <div class="status-group">
-        <!-- Twitter 平台进度 -->
+        <!-- Twitter Platform Progress -->
         <div class="platform-status twitter" :class="{ active: runStatus.twitter_running, completed: runStatus.twitter_completed }">
           <div class="platform-header">
             <svg class="platform-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -30,7 +30,7 @@
               <span class="stat-value mono">{{ runStatus.twitter_actions_count || 0 }}</span>
             </span>
           </div>
-          <!-- 可用动作提示 -->
+          <!-- Available Actions Hint -->
           <div class="actions-tooltip">
             <div class="tooltip-title">Available Actions</div>
             <div class="tooltip-actions">
@@ -44,7 +44,7 @@
           </div>
         </div>
         
-        <!-- Reddit 平台进度 -->
+        <!-- Reddit Platform Progress -->
         <div class="platform-status reddit" :class="{ active: runStatus.reddit_running, completed: runStatus.reddit_completed }">
           <div class="platform-header">
             <svg class="platform-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -71,7 +71,7 @@
               <span class="stat-value mono">{{ runStatus.reddit_actions_count || 0 }}</span>
             </span>
           </div>
-          <!-- 可用动作提示 -->
+          <!-- Available Actions Hint -->
           <div class="actions-tooltip">
             <div class="tooltip-title">Available Actions</div>
             <div class="tooltip-actions">
@@ -157,12 +157,12 @@
               </div>
               
               <div class="card-body">
-                <!-- CREATE_POST: 发布帖子 -->
+                <!-- CREATE_POST: Create Post -->
                 <div v-if="action.action_type === 'CREATE_POST' && action.action_args?.content" class="content-text main-text">
                   {{ action.action_args.content }}
                 </div>
 
-                <!-- QUOTE_POST: 引用帖子 -->
+                <!-- QUOTE_POST: Quote Post -->
                 <template v-if="action.action_type === 'QUOTE_POST'">
                   <div v-if="action.action_args?.quote_content" class="content-text">
                     {{ action.action_args.quote_content }}
@@ -178,7 +178,7 @@
                   </div>
                 </template>
 
-                <!-- REPOST: 转发帖子 -->
+                <!-- REPOST: Repost -->
                 <template v-if="action.action_type === 'REPOST'">
                   <div class="repost-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
@@ -189,7 +189,7 @@
                   </div>
                 </template>
 
-                <!-- LIKE_POST: 点赞帖子 -->
+                <!-- LIKE_POST: Like Post -->
                 <template v-if="action.action_type === 'LIKE_POST'">
                   <div class="like-info">
                     <svg class="icon-small filled" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -200,7 +200,7 @@
                   </div>
                 </template>
 
-                <!-- CREATE_COMMENT: 发表评论 -->
+                <!-- CREATE_COMMENT: Create Comment -->
                 <template v-if="action.action_type === 'CREATE_COMMENT'">
                   <div v-if="action.action_args?.content" class="content-text">
                     {{ action.action_args.content }}
@@ -211,7 +211,7 @@
                   </div>
                 </template>
 
-                <!-- SEARCH_POSTS: 搜索帖子 -->
+                <!-- SEARCH_POSTS: Search Posts -->
                 <template v-if="action.action_type === 'SEARCH_POSTS'">
                   <div class="search-info">
                     <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -301,10 +301,10 @@ const { t } = useI18n()
 
 const props = defineProps({
   simulationId: String,
-  maxRounds: Number, // 从Step2传入的最大轮数
+  maxRounds: Number, // Max rounds passed from Step 2
   minutesPerRound: {
     type: Number,
-    default: 30 // 默认每轮30分钟
+    default: 30 // Default 30 min per round
   },
   projectData: Object,
   graphData: Object,
@@ -317,13 +317,13 @@ const router = useRouter()
 
 // State
 const isGeneratingReport = ref(false)
-const phase = ref(0) // 0: 未开始, 1: 运行中, 2: 已完成
+const phase = ref(0) // 0: Not Started, 1: Running, 2: Completed
 const isStarting = ref(false)
 const isStopping = ref(false)
 const startError = ref(null)
 const runStatus = ref({})
-const allActions = ref([]) // 所有动作（增量累积）
-const actionIds = ref(new Set()) // 用于去重的动作ID集合
+const allActions = ref([]) // All actions (incremental)
+const actionIds = ref(new Set()) // Set for deduplicating action IDs
 const scrollContainer = ref(null)
 
 // Computed
@@ -376,7 +376,7 @@ const resetAllState = () => {
   startError.value = null
   isStarting.value = false
   isStopping.value = false
-  stopPolling()  // 停止之前可能存在的轮询
+  stopPolling()  // Stop existing polling
 }
 
 // 启动模拟
@@ -398,8 +398,8 @@ const doStartSimulation = async () => {
     const params = {
       simulation_id: props.simulationId,
       platform: 'parallel',
-      force: true,  // 强制重新开始
-      enable_graph_memory_update: true  // 开启动态图谱更新
+      force: true,  // Force restart
+      enable_graph_memory_update: true  // Enable dynamic graph memory update
     }
     
     if (props.maxRounds) {
@@ -424,7 +424,7 @@ const doStartSimulation = async () => {
       startStatusPolling()
       startDetailPolling()
     } else {
-      startError.value = res.error || '启动失败'
+      startError.value = res.error || 'Failed to start'
       addLog(t('log.startFailed', { error: res.error || t('common.unknownError') }))
       emit('update-status', 'error')
     }
@@ -530,7 +530,7 @@ const fetchRunStatus = async () => {
       }
     }
   } catch (err) {
-    console.warn('获取运行状态失败:', err)
+    console.warn('Failed to get run status:', err)
   }
 }
 
@@ -588,7 +588,7 @@ const fetchRunStatusDetail = async () => {
       // 新动作会在底部追加
     }
   } catch (err) {
-    console.warn('获取详细状态失败:', err)
+    console.warn('Failed to get detailed status:', err)
   }
 }
 
