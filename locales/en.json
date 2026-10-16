@@ -97,7 +97,7 @@
     "step05Title": "Campus Reaction Sandbox",
     "step05Desc": "Optional multi-agent student population simulation",
     "realitySeed": "01 / Campus Notice",
-    "supportedFormats": "Formats: PDF, MD, TXT, PNG, JPG",
+    "supportedFormats": "Formats: PDF, MD, TXT, PNG, JPG, JPEG, WebP",
     "dragToUpload": "Drag notices to upload",
     "orBrowse": "or click to browse files",
     "inputParams": "Input Parameters",

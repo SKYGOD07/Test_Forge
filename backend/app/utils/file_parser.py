@@ -57,10 +57,15 @@ def _read_text_with_fallback(file_path: str) -> str:
     return data.decode(encoding, errors='replace')
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 class FileParser:
     """File parsing utility class"""
     
-    SUPPORTED_EXTENSIONS = {'.pdf', '.md', '.markdown', '.txt'}
+    SUPPORTED_EXTENSIONS = {'.pdf', '.md', '.markdown', '.txt', '.png', '.jpg', '.jpeg', '.webp'}
     
     @classmethod
     def is_supported(cls, file_path: str) -> bool:
@@ -87,8 +92,56 @@ class FileParser:
             return cls._extract_from_md(file_path)
         elif suffix == '.txt':
             return cls._extract_from_txt(file_path)
+        elif suffix in {'.png', '.jpg', '.jpeg', '.webp'}:
+            return cls._extract_from_image(file_path)
         
         raise ValueError(f"Unable to process format: {suffix}")
+
+    @classmethod
+    def _extract_from_image(cls, file_path: str) -> str:
+        """Extract text from image using Gemma 4 multimodal or fallback metadata"""
+        path = Path(file_path)
+        suffix = path.suffix.lower()
+        mime_map = {
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.webp': 'image/webp'
+        }
+        mime_type = mime_map.get(suffix, 'image/jpeg')
+
+        try:
+            from ..services.gemma_service import GemmaService
+            service = GemmaService()
+            with open(file_path, 'rb') as f:
+                img_bytes = f.read()
+
+            result = service.analyze_notice(image_bytes=img_bytes, mime_type=mime_type)
+            if result.get("success") and result.get("data"):
+                data = result["data"]
+                lines = [
+                    f"Notice Title: {data.get('title') or path.stem}",
+                    f"Category: {data.get('category') or 'General'}",
+                    f"Summary: {data.get('summary') or ''}",
+                    f"Organizer: {data.get('organizer') or 'N/A'}",
+                    f"Event Date: {data.get('event_date') or 'N/A'}",
+                    f"Registration Deadline: {data.get('registration_deadline') or 'N/A'}",
+                    f"Venue: {data.get('venue') or 'N/A'}"
+                ]
+                if data.get('eligibility'):
+                    lines.append(f"Eligibility: {', '.join(data['eligibility'])}")
+                if data.get('requirements'):
+                    lines.append(f"Requirements: {', '.join(data['requirements'])}")
+                if data.get('action_items'):
+                    action_texts = [f"- {item.get('task')} (Deadline: {item.get('deadline', 'N/A')})" for item in data['action_items']]
+                    lines.append("Action Items:\n" + "\n".join(action_texts))
+                if data.get('source_evidence'):
+                    lines.append("Source Text & Evidence:\n" + "\n".join(data['source_evidence']))
+                return "\n\n".join(lines)
+        except Exception as e:
+            logger.warning(f"Image text extraction via Gemma failed for {file_path}: {e}")
+
+        return f"[Campus Notice Poster: {path.name} (Format: {suffix.upper()})]"
     
     @staticmethod
     def _extract_from_pdf(file_path: str) -> str:

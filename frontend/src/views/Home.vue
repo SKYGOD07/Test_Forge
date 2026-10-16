@@ -181,7 +181,7 @@
                     ref="fileInput"
                     type="file"
                     multiple
-                    accept=".pdf,.md,.txt"
+                    accept=".pdf,.md,.txt,.png,.jpg,.jpeg,.webp,image/*"
                     @change="handleFileSelect"
                     style="display: none"
                     :disabled="loading"
@@ -195,7 +195,7 @@
                   
                   <div v-else class="file-list">
                     <div v-for="(file, index) in files" :key="index" class="file-item">
-                      <span class="file-icon">📄</span>
+                      <span class="file-icon">{{ isImageFile(file) ? '🖼️' : '📄' }}</span>
                       <span class="file-name">{{ file.name }}</span>
                       <button @click.stop="removeFile(index)" class="remove-btn">×</button>
                     </div>
@@ -312,10 +312,16 @@ const handleDrop = (e) => {
   addFiles(droppedFiles)
 }
 
+const isImageFile = (file) => {
+  if (file?.type && file.type.startsWith('image/')) return true
+  const ext = (file?.name || '').split('.').pop().toLowerCase()
+  return ['png', 'jpg', 'jpeg', 'webp', 'gif', 'bmp'].includes(ext)
+}
+
 const addFiles = (newFiles) => {
   const validFiles = newFiles.filter(file => {
     const ext = file.name.split('.').pop().toLowerCase()
-    return ['pdf', 'md', 'txt'].includes(ext)
+    return ['pdf', 'md', 'txt', 'png', 'jpg', 'jpeg', 'webp'].includes(ext) || (file.type && file.type.startsWith('image/'))
   })
   files.value.push(...validFiles)
 }
