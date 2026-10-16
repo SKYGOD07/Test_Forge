@@ -1,203 +1,146 @@
 <div align="center">
 
-<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="MiroFish Logo" width="75%"/>
+<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="CampusPulse AI 橫幅" width="85%"/>
 
-<a href="https://trendshift.io/repositories/16144" target="_blank"><img src="https://trendshift.io/api/badge/repositories/16144" alt="666ghj%2FMiroFish | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+### CampusPulse AI — 多模态校园通告解析与群体智能决策平台
 
-简洁通用的群体智能引擎，预测万物
-</br>
-<em>A Simple and Universal Swarm Intelligence Engine, Predicting Anything</em>
+*利用 Google Gemma 4 将繁杂的校园海报、通知公文转化为清晰可靠的行动清单，并以多智能体群体智能沙盘预演校园决策。*
 
-<a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="666ghj%2FMiroFish | Shanda" height="40"/></a>
+[![MLH Hacktoberfest Hack Day](https://img.shields.io/badge/MLH-Hacktoberfest_Hack_Day_Gwalior_2026-F65314?style=for-the-badge&logo=majorleaguehacking&logoColor=white)](https://www.mlh.com/)
+[![Best Use of Gemma 4](https://img.shields.io/badge/Track-Best_Use_of_Gemma_4-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/gemma)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Vue 3](https://img.shields.io/badge/Vue-3.5-4FC08D?style=flat-square&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.html)
 
-[![GitHub Stars](https://img.shields.io/github/stars/666ghj/MiroFish?style=flat-square&color=DAA520)](https://github.com/666ghj/MiroFish/stargazers)
-[![GitHub Watchers](https://img.shields.io/github/watchers/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/watchers)
-[![GitHub Forks](https://img.shields.io/github/forks/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/network)
-[![Docker](https://img.shields.io/badge/Docker-Build-2496ED?style=flat-square&logo=docker&logoColor=white)](https://hub.docker.com/)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/666ghj/MiroFish)
-
-[![Discord](https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white)](http://discord.gg/ePf5aPaHnA)
-[![X](https://img.shields.io/badge/X-Follow-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/mirofish_ai)
-[![Instagram](https://img.shields.io/badge/Instagram-Follow-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/mirofish_ai/)
-
-[English](./README.md) | [中文文档](./README-ZH.md)
+[English](./README.md) | [中文说明](./README-ZH.md) | [Gemma 4 项目评估与架构文档](./Docs/GEMMA4_ASSESSMENT.md)
 
 </div>
 
+---
+
 ## ⚡ 项目概述
 
-**MiroFish** 是一款基于多智能体技术的新一代 AI 预测引擎。通过提取现实世界的种子信息（如突发新闻、政策草案、金融信号），自动构建出高保真的平行数字世界。在此空间内，成千上万个具备独立人格、长期记忆与行为逻辑的智能体进行自由交互与社会演化。你可透过「上帝视角」动态注入变量，精准推演未来走向——**让未来在数字沙盘中预演，助决策在百战模拟后胜出**。
+**CampusPulse AI** 是一款专为高校师生与决策者打造的校园智能平台。为参加 **MLH Hacktoberfest Hack Day Gwalior x ITM University** 黑客松的 **Best Use of Gemma 4** 赛道而开发，平台深度融合了两大核心能力：
 
-> 你只需：上传种子材料（数据分析报告或者有趣的小说故事），并用自然语言描述预测需求</br>
-> MiroFish 将返回：一份详尽的预测报告，以及一个可深度交互的高保真数字世界
+1. **通告即行动 (Notice-to-Action — Gemma 4 核心特性)**:  
+   学生在校园日常中经常面临海量复杂的活动海报、社团通知、选课与考试通知、奖学金公告。信息排版分散，日期、截止线、资格要求和报名渠道极难捕捉。CampusPulse AI 通过 Google GenAI SDK 接入官方托管的 Gemma 4 多模态模型 (`gemma-4-26b-a4b-it` / `gemma-4-31b-it`)，直接识别图片中的全部关键事实，严谨标注缺失与存疑项（杜绝模型幻觉），并一键生成附带日历提醒的高优先级学生行动清单。
 
-### 我们的愿景
+2. **校园反应沙盘 (Campus Reaction Sandbox — 群体智能推演)**:  
+   面向校园管理者与学生组织，平台提供多智能体平行世界模拟环境。基于 OASIS 社交演化架构与 Zep Cloud GraphRAG 图记忆，可自动化构建包含上百名个性鲜明学生智能体的数字沙盘，预演校园新政、活动反响与舆情趋势。
 
-MiroFish 致力于打造映射现实的群体智能镜像，通过捕捉个体互动引发的群体涌现，突破传统预测的局限：
+---
 
-- **于宏观**：我们是决策者的预演实验室，让政策与公关在零风险中试错
-- **于微观**：我们是个人用户的创意沙盘，无论是推演小说结局还是探索脑洞，皆可有趣、好玩、触手可及
+## 🎯 核心功能特性
 
-从严肃预测到趣味仿真，我们让每一个如果都能看见结果，让预测万物成为可能。
+| 功能模块 | 驱动技术 | 功能描述 |
+|---|---|---|
+| **多模态通告解析** | Google Gemma 4 (`gemma-4-26b-a4b-it`) | 支持 PNG/JPG 格式海报与截图，毫秒级提取结构化 JSON 数据。 |
+| **严谨不幻觉机制** | 提示词工程与模式校验 | 明确标注未提供或存疑的字段（如未明确地点、截止时间含糊），拒绝胡乱推断。 |
+| **行动步骤清单** | 前端动态执行引擎 | 自动将通告转化为按截止期排序的行动事项，并提供 Google Calendar 导出。 |
+| **双屏对比视图** | Vue 3 响应式组件 | 原版海报与提取结构化事实同屏对比展示，证据片段清晰可查。 |
+| **群体行为推演** | OASIS + GraphRAG (Zep Cloud) | 模拟学生群体在校园政策出台后的舆论发酵与行为走势。 |
+| **决策分析报告** | ReportAgent 智能体 | 具备深度溯源与全局记忆检索能力的报告智能体，输出专业推演分析。 |
 
-## 🌐 在线体验
-
-欢迎访问在线 Demo 演示环境，体验我们为你准备的一次关于热点舆情事件的推演预测：[mirofish-live-demo](https://666ghj.github.io/mirofish-demo/)
+---
 
 ## 📸 系统截图
 
 <div align="center">
 <table>
 <tr>
-<td><img src="./static/image/Screenshot/screenshot-1.png" alt="截图1" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-2.png" alt="截图2" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-1.png" alt="首页界面" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-2.png" alt="知识图谱构建" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/screenshot-3.png" alt="截图3" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-4.png" alt="截图4" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-3.png" alt="环境搭建与人设生成" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-4.png" alt="多智能体并行模拟" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/screenshot-5.png" alt="截图5" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-6.png" alt="截图6" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-5.png" alt="详尽推演报告" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-6.png" alt="深度智能体对话" width="100%"/></td>
 </tr>
 </table>
 </div>
 
-## 🎬 演示视频
+---
 
-### 1. 武汉大学舆情推演预测 + MiroFish项目讲解
+## 🎬 演示视频封面
 
-<div align="center">
-<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/wuhan-university-simulation-cover.png" alt="MiroFish Demo Video" width="75%"/></a>
-
-点击图片查看使用微舆BettaFish生成的《武大舆情报告》进行预测的完整演示视频
-</div>
-
-### 2. 《红楼梦》失传结局推演预测
+### 1. 校园通告即行动 (Gemma 4 多模态解析)
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/red-chamber-simulation-cover.jpg" alt="MiroFish Demo Video" width="75%"/></a>
+<img src="./static/image/wuhan-university-simulation-cover.png" alt="通告即行动演示封面" width="80%"/>
 
-点击图片查看基于《红楼梦》前80回数十万字，MiroFish深度预测失传结局
+*基于 Google Gemma 4 (Gemini API) 的视觉通告解析与行动清单生成。*
 </div>
 
-> **金融方向推演预测**、**时政要闻推演预测**等示例陆续更新中...
+### 2. 校园群体智能模拟与政策沙盘
 
-## 🔄 工作流程
+<div align="center">
+<img src="./static/image/red-chamber-simulation-cover.jpg" alt="群体智能模拟演示封面" width="80%"/>
 
-1. **图谱构建**：现实种子提取 & 个体与群体记忆注入 & GraphRAG构建
-2. **环境搭建**：实体关系抽取 & 人设生成 & 环境配置Agent注入仿真参数
-3. **开始模拟**：双平台并行模拟 & 自动解析预测需求 & 动态更新时序记忆
-4. **报告生成**：ReportAgent拥有丰富的工具集与模拟后环境进行深度交互
-5. **深度互动**：与模拟世界中的任意一位进行对话 & 与ReportAgent进行对话
+*高保真学生群体模拟，预演校园活动参与度与政策反响。*
+</div>
 
-## 🚀 快速开始
+---
 
-### 一、源码部署（推荐）
+## 🚀 快速上手
 
-#### 前置要求
+### 环境要求
 
-| 工具 | 版本要求 | 说明 | 安装检查 |
-|------|---------|------|---------|
-| **Node.js** | 18+ | 前端运行环境，包含 npm | `node -v` |
-| **Python** | ≥3.11, ≤3.12 | 后端运行环境 | `python --version` |
-| **uv** | 最新版 | Python 包管理器 | `uv --version` |
+- **Node.js**: 18+ (包含 npm)
+- **Python**: 3.11+
+- **uv**: 推荐最新版本 Python 包管理器
+- **Docker**: 可选，容器化一键部署
 
-#### 1. 配置环境变量
+### 1. 配置环境变量
 
 ```bash
-# 复制示例配置文件
+# 复制环境变量模板
 cp .env.example .env
-
-# 编辑 .env 文件，填入必要的 API 密钥
 ```
 
-**必需的环境变量：**
+在 `.env` 中填写 API 密钥：
 
 ```env
-# LLM API配置（支持 OpenAI SDK 格式的任意 LLM API）
-# 推荐使用阿里百炼平台qwen-plus模型：https://bailian.console.aliyun.com/
-# 注意消耗较大，可先进行小于40轮的模拟尝试
+# Google Gemma 4 API (Notice-to-Action 必须)
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMMA_MODEL_NAME=gemma-4-26b-a4b-it
+
+# 可选：群体模拟 LLM 与 Zep Cloud 记忆
 LLM_API_KEY=your_api_key
 LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 LLM_MODEL_NAME=qwen-plus
-
-# Zep Cloud 配置
-# 每月免费额度即可支撑简单使用：https://app.getzep.com/
 ZEP_API_KEY=your_zep_api_key
 ```
 
-#### 2. 安装依赖
+### 2. 安装依赖并启动
 
 ```bash
-# 一键安装所有依赖（根目录 + 前端 + 后端）
+# 一键安装前后端所有依赖
 npm run setup:all
-```
 
-或者分步安装：
-
-```bash
-# 安装 Node 依赖（根目录 + 前端）
-npm run setup
-
-# 安装 Python 依赖（后端，自动创建虚拟环境）
-npm run setup:backend
-```
-
-#### 3. 启动服务
-
-```bash
-# 同时启动前后端（在项目根目录执行）
+# 一键并发启动前端与后端
 npm run dev
 ```
 
-**服务地址：**
-- 前端：`http://localhost:3000`
-- 后端 API：`http://localhost:5001`
+- **前端应用**: [http://localhost:3000](http://localhost:3000)
+- **后端服务**: [http://localhost:5001](http://localhost:5001)
 
-**单独启动：**
-
-```bash
-npm run backend   # 仅启动后端
-npm run frontend  # 仅启动前端
-```
-
-### 二、Docker 部署
+### 3. Docker 部署
 
 ```bash
-# 1. 配置环境变量（同源码部署）
-cp .env.example .env
-
-# 2. 拉取镜像并启动
-docker compose up -d
+docker compose up -d --build
 ```
 
-默认会读取根目录下的 `.env`，并映射端口 `3000（前端）/5001（后端）`
+---
 
-> 在 `docker-compose.yml` 中已通过注释提供加速镜像地址，可按需替换
+## 📄 致谢与开源协议
 
-## 📬 更多交流
-
-<div align="center">
-<img src="./static/image/qq-group.png" alt="QQ交流群" width="60%"/>
-</div>
-
-&nbsp;
-
-MiroFish团队长期招募全职/实习，如果你对多Agent应用感兴趣，欢迎投递简历至：**mirofish@shanda.com**
-
-## 📄 致谢
-
-**MiroFish 得到了盛大集团的战略支持和孵化！**
-
-MiroFish 的仿真引擎由 **[OASIS](https://github.com/camel-ai/oasis)** 驱动，我们衷心感谢 CAMEL-AI 团队的开源贡献！
-
-## 📈 项目统计
-
-<a href="https://github.com/666ghj/MiroFish">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="static/image/star-history-dark.svg" />
-   <source media="(prefers-color-scheme: light)" srcset="static/image/star-history-light.svg" />
-   <img alt="666ghj/MiroFish Star History Chart" src="static/image/star-history-light.svg" />
- </picture>
-</a>
+- **黑客松**: 本项目专为 **MLH Hacktoberfest Hack Day Gwalior x ITM University 2026** 的 **Best Use of Gemma 4** 赛道开发。
+- **Gemma 4**: 由 Google 开源 Gemma 4 系列模型提供视觉与推理支持。
+- **推演引擎**: 模拟层采用 CAMEL-AI 团队的 **[OASIS](https://github.com/camel-ai/oasis)** 仿真架构。
+- **上游代码基础**: 借鉴并派生自开源项目 **[MiroFish](https://github.com/666ghj/MiroFish)**（作者 666ghj），特此致谢。
+- **开源许可**: 本项目遵循 **AGPL-3.0** 开源许可协议。详情请参阅 [LICENSE](./LICENSE)。

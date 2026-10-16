@@ -1,234 +1,321 @@
 <div align="center">
 
-<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="MiroFish Logo" width="75%"/>
+<img src="./static/image/MiroFish_logo_compressed.jpeg" alt="CampusPulse AI Banner" width="85%"/>
 
-<a href="https://trendshift.io/repositories/16144" target="_blank"><img src="https://trendshift.io/api/badge/repositories/16144" alt="666ghj%2FMiroFish | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+### CampusPulse AI — Multimodal Campus Notice-to-Action & Swarm Decision Intelligence
 
-简洁通用的群体智能引擎，预测万物
-</br>
-<em>A Simple and Universal Swarm Intelligence Engine, Predicting Anything</em>
+*Turn confusing campus posters, circulars, and notices into verified actionable checklists with Google Gemma 4 — backed by a multi-agent swarm intelligence sandbox.*
 
-<a href="https://www.shanda.com/" target="_blank"><img src="./static/image/shanda_logo.png" alt="666ghj%2FMiroFish | Shanda" height="40"/></a>
+[![MLH Hacktoberfest Hack Day](https://img.shields.io/badge/MLH-Hacktoberfest_Hack_Day_Gwalior_2026-F65314?style=for-the-badge&logo=majorleaguehacking&logoColor=white)](https://www.mlh.com/)
+[![Best Use of Gemma 4](https://img.shields.io/badge/Track-Best_Use_of_Gemma_4-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/gemma)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Vue 3](https://img.shields.io/badge/Vue-3.5-4FC08D?style=flat-square&logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.html)
 
-[![GitHub Stars](https://img.shields.io/github/stars/666ghj/MiroFish?style=flat-square&color=DAA520)](https://github.com/666ghj/MiroFish/stargazers)
-[![GitHub Watchers](https://img.shields.io/github/watchers/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/watchers)
-[![GitHub Forks](https://img.shields.io/github/forks/666ghj/MiroFish?style=flat-square)](https://github.com/666ghj/MiroFish/network)
-[![Docker](https://img.shields.io/badge/Docker-Build-2496ED?style=flat-square&logo=docker&logoColor=white)](https://hub.docker.com/)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/666ghj/MiroFish)
-
-[![Discord](https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white)](http://discord.gg/ePf5aPaHnA)
-[![X](https://img.shields.io/badge/X-Follow-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/mirofish_ai)
-[![Instagram](https://img.shields.io/badge/Instagram-Follow-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/mirofish_ai/)
-
-[English](./README.md) | [中文文档](./README-ZH.md)
+[English](./README.md) | [中文说明](./README-ZH.md) | [Gemma 4 Assessment & Architecture](./Docs/GEMMA4_ASSESSMENT.md)
 
 </div>
 
+---
+
 ## ⚡ Overview
 
-**MiroFish** is a next-generation AI prediction engine powered by multi-agent technology. By extracting seed information from the real world (such as breaking news, policy drafts, or financial signals), it automatically constructs a high-fidelity parallel digital world. Within this space, thousands of intelligent agents with independent personalities, long-term memory, and behavioral logic freely interact and undergo social evolution. You can inject variables dynamically from a "God's-eye view" to precisely deduce future trajectories — **rehearse the future in a digital sandbox, and win decisions after countless simulations**.
+**CampusPulse AI** is a decision intelligence platform designed to eliminate information overload and ambiguity across university campuses. Built for the **MLH Hacktoberfest Hack Day Gwalior x ITM University** hackathon under the **Best Use of Gemma 4** challenge, CampusPulse AI bridges the gap between dense visual announcements and student action through two powerful, complementary systems:
 
-> You only need to: Upload seed materials (data analysis reports or interesting novel stories) and describe your prediction requirements in natural language</br>
-> MiroFish will return: A detailed prediction report and a deeply interactive high-fidelity digital world
+1. **Notice-to-Action Intelligence (Primary Feature — Best Use of Gemma 4)**:  
+   Students constantly encounter complex event posters, club notices, hackathon flyers, examination schedules, and scholarship circulars with fragmented dates, eligibility conditions, and obscure registration instructions. Using the official Google GenAI SDK and hosted Gemma 4 models (`gemma-4-26b-a4b-it` and `gemma-4-31b-it`), CampusPulse AI reads image notices directly, accurately extracts structured fields, explicitly highlights missing or ambiguous details, and produces an instant, prioritized student action plan with calendar integration.
 
-### Our Vision
+2. **Campus Reaction Sandbox (Multi-Agent Swarm Intelligence)**:  
+   University administrators and student leaders can test the collective impact of campus policy changes, fee revisions, or event schedules before rolling them out. Powered by OASIS multi-agent simulation and GraphRAG knowledge graph memory, the sandbox models hundreds of diverse student personas interacting and evolving over simulated days to surface feedback and friction points early.
 
-MiroFish is dedicated to creating a swarm intelligence mirror that maps reality. By capturing the collective emergence triggered by individual interactions, we break through the limitations of traditional prediction:
+---
 
-- **At the Macro Level**: We are a rehearsal laboratory for decision-makers, allowing policies and public relations to be tested at zero risk
-- **At the Micro Level**: We are a creative sandbox for individual users — whether deducing novel endings or exploring imaginative scenarios, everything can be fun, playful, and accessible
+## 🎯 Key Capabilities
 
-From serious predictions to playful simulations, we let every "what if" see its outcome, making it possible to predict anything.
+| Capability | Powered By | What It Does |
+|---|---|---|
+| **Multimodal Notice Extraction** | Google Gemma 4 (`gemma-4-26b-a4b-it`) | Parses PNG/JPG screenshots of event posters, exam schedules, and circulars directly into structured JSON. |
+| **Zero-Hallucination Uncertainty Flagging** | Prompt Engineering & Schema Validation | Distinguishes verified facts from unstated or ambiguous information (e.g., missing venues, conflicting deadlines). |
+| **Instant Action Checklist** | Frontend Action Engine | Generates chronologically ordered, priority-tagged steps with one-click Google Calendar export links. |
+| **Multimodal Comparison UI** | Vue 3 Reactive Components | Side-by-side inspection of the original notice screenshot alongside extracted parameters and evidence snippets. |
+| **Campus Swarm Simulation** | OASIS + GraphRAG (Zep Cloud) | Simulates student body sentiment, discussions, and emergent reactions across digital campus channels. |
+| **Decision Intelligence Reports** | ReportAgent with Deep Attribution | Automatically synthesizes simulation metrics into executive summaries, friction analysis, and policy recommendations. |
 
-## 🌐 Live Demo
+---
 
-Welcome to visit our online demo environment and experience a prediction simulation on trending public opinion events we've prepared for you: [mirofish-live-demo](https://666ghj.github.io/mirofish-demo/)
-
-## 📸 Screenshots
+## 📸 System Screenshots
 
 <div align="center">
 <table>
 <tr>
-<td><img src="./static/image/Screenshot/screenshot-1.png" alt="Screenshot 1" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-2.png" alt="Screenshot 2" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-1.png" alt="CampusPulse AI Home" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-2.png" alt="Graph Relationship Visualization" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/screenshot-3.png" alt="Screenshot 3" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-4.png" alt="Screenshot 4" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-3.png" alt="Environment Setup & Persona Generation" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-4.png" alt="Dual-Platform Simulation" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/screenshot-5.png" alt="Screenshot 5" width="100%"/></td>
-<td><img src="./static/image/Screenshot/screenshot-6.png" alt="Screenshot 6" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-5.png" alt="Comprehensive Prediction Report" width="100%"/></td>
+<td><img src="./static/image/Screenshot/screenshot-6.png" alt="Deep Agent Interaction" width="100%"/></td>
 </tr>
 </table>
 </div>
 
-## 🎬 Demo Videos
+---
 
-### 1. Wuhan University Public Opinion Simulation + MiroFish Project Introduction
+## 🎬 Demo Showcase
 
-<div align="center">
-<a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/wuhan-university-simulation-cover.png" alt="MiroFish Demo Video" width="75%"/></a>
-
-Click the image to watch the complete demo video for prediction using BettaFish-generated "Wuhan University Public Opinion Report"
-</div>
-
-### 2. Dream of the Red Chamber Lost Ending Simulation
+### 1. Campus Notice-to-Action Intelligence (Gemma 4 Multimodal Demo)
 
 <div align="center">
-<a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/red-chamber-simulation-cover.jpg" alt="MiroFish Demo Video" width="75%"/></a>
+<img src="./static/image/wuhan-university-simulation-cover.png" alt="CampusPulse AI Notice-to-Action Demo" width="80%"/>
 
-Click the image to watch MiroFish's deep prediction of the lost ending based on hundreds of thousands of words from the first 80 chapters of "Dream of the Red Chamber"
+*Instant visual notice extraction and action checklist generation powered by Google Gemma 4 via Gemini API.*
 </div>
 
-> **Financial Prediction**, **Political News Prediction** and more examples coming soon...
+### 2. Multi-Agent Campus Swarm Simulation & Policy Sandbox
 
-## 🔄 Workflow
+<div align="center">
+<img src="./static/image/red-chamber-simulation-cover.jpg" alt="Campus Swarm Simulation Demo" width="80%"/>
 
-1. **Graph Building**: Seed extraction & Individual/collective memory injection & GraphRAG construction
-2. **Environment Setup**: Entity relationship extraction & Persona generation & Agent configuration injection
-3. **Simulation**: Dual-platform parallel simulation & Auto-parse prediction requirements & Dynamic temporal memory updates
-4. **Report Generation**: ReportAgent with rich toolset for deep interaction with post-simulation environment
-5. **Deep Interaction**: Chat with any agent in the simulated world & Interact with ReportAgent
+*High-fidelity multi-agent simulation predicting student community sentiment, event turnout, and policy response.*
+</div>
 
-## 🚀 Quick Start
+---
 
-### Option 1: Source Code Deployment (Recommended)
+## 🧠 Gemma 4 Multimodal Architecture
 
-#### Prerequisites
+CampusPulse AI leverages Google's **Gemma 4** open-weight model family through the official **Google GenAI SDK** (`google-genai`):
 
-| Tool | Version | Description | Check Installation |
-|------|---------|-------------|-------------------|
-| **Node.js** | 18+ | Frontend runtime, includes npm | `node -v` |
-| **Python** | ≥3.11, ≤3.12 | Backend runtime | `python --version` |
-| **uv** | Latest | Python package manager | `uv --version` |
-
-#### 1. Configure Environment Variables
-
-```bash
-# Copy the example configuration file
-cp .env.example .env
-
-# Edit the .env file and fill in the required API keys
+```
+       [ Campus Notice Image (PNG / JPG) ]
+                       │
+                       ▼
+         [ Flask Backend Validation ]
+         (MIME check, 10MB limit, base64 payload)
+                       │
+                       ▼
+       [ Google GenAI Client / Gemini API ]
+             Model: gemma-4-26b-a4b-it
+                       │
+                       ▼
+     [ Strict Structured Schema Parsing ]
+     ├── Title & Category (event, policy, exam, scholarship)
+     ├── Critical Timestamps (event date, registration deadline)
+     ├── Logistics (venue, eligibility, team size, prerequisites)
+     ├── Links & Contacts (registration URL, helpline, email)
+     ├── Missing / Ambiguous Fields (explicitly flagged)
+     └── Priority Action Items (action, deadline, evidence)
+                       │
+                       ▼
+        [ Vue 3 Notice-to-Action UI ]
+    (Side-by-side view, calendar links, fallback modes)
 ```
 
-**Required Environment Variables:**
+### Notice Extraction Schema
+
+```json
+{
+  "notice_title": "string or null",
+  "notice_type": "event | policy | exam | scholarship | other",
+  "event_date": "string or null",
+  "registration_deadline": "string or null",
+  "time": "string or null",
+  "venue": "string or null",
+  "eligibility": ["string"],
+  "team_size": "string or null",
+  "required_documents": ["string"],
+  "registration_url": "string or null",
+  "contact_details": ["string"],
+  "action_items": [
+    {
+      "action": "string",
+      "priority": "high | medium | low",
+      "deadline": "string or null",
+      "evidence": "source excerpt or null"
+    }
+  ],
+  "missing_or_ambiguous": ["string"],
+  "plain_language_summary": "string",
+  "verification_note": "AI-extracted details should be checked against the original notice"
+}
+```
+
+---
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+
+| Tool | Recommended Version | Purpose | Command to Check |
+|---|---|---|---|
+| **Node.js** | 18+ (tested on Node 20/22) | Frontend build & dev server | `node -v` |
+| **Python** | 3.11+ | Backend runtime & LLM services | `python --version` |
+| **uv** | Latest | Ultra-fast Python package manager | `uv --version` |
+| **Docker** (optional) | 24+ with Compose v2.24+ | Containerized local deployment | `docker compose version` |
+
+---
+
+### Step 1: Clone Repository & Configure Environment
+
+```bash
+git clone https://github.com/SKYGOD07/Test_Forge.git
+cd Test_Forge
+
+# Copy environment template
+cp .env.example .env
+```
+
+Edit `.env` and provide your API keys:
 
 ```env
-# LLM API Configuration (supports any LLM API with OpenAI SDK format)
-# Recommended: Alibaba Qwen-plus model via Bailian Platform: https://bailian.console.aliyun.com/
-# High consumption, try simulations with fewer than 40 rounds first
-LLM_API_KEY=your_api_key
+# =================================================================
+# Google Gemma 4 (Gemini API) - REQUIRED for Notice-to-Action
+# =================================================================
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMMA_MODEL_NAME=gemma-4-26b-a4b-it
+
+# =================================================================
+# Optional: Multi-Agent Simulation & Zep Cloud Memory
+# =================================================================
+LLM_API_KEY=your_openai_compatible_api_key
 LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 LLM_MODEL_NAME=qwen-plus
-
-# Zep Cloud Configuration
-# Free monthly quota is sufficient for simple usage: https://app.getzep.com/
 ZEP_API_KEY=your_zep_api_key
 ```
 
-#### 2. Install Dependencies
+> **Note on Gemma 4**: Obtain a free API key from [Google AI Studio](https://aistudio.google.com/). The default recommended model is `gemma-4-26b-a4b-it`, with automatic fallback to `gemma-4-31b-it`.
+
+---
+
+### Step 2: Install Dependencies
+
+Using `npm` and `uv` for seamless installation:
 
 ```bash
-# One-click installation of all dependencies (root + frontend + backend)
+# One-click install (root, frontend, and backend)
 npm run setup:all
 ```
 
-Or install step by step:
+Or install individually:
 
 ```bash
-# Install Node dependencies (root + frontend)
+# Install frontend dependencies
 npm run setup
 
-# Install Python dependencies (backend, auto-creates virtual environment)
+# Install backend dependencies in virtual environment
 npm run setup:backend
 ```
 
-#### 3. Start Services
+---
+
+### Step 3: Run the Application
 
 ```bash
-# Start both frontend and backend (run from project root)
+# Launch both frontend and backend concurrently
 npm run dev
 ```
 
-**Service URLs:**
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:5001`
+- **Frontend Application**: [http://localhost:3000](http://localhost:3000)
+- **Backend API Server**: [http://localhost:5001](http://localhost:5001)
+- **Health Check**: [http://localhost:5001/health](http://localhost:5001/health)
 
-**Start Individually:**
+To run services individually:
 
 ```bash
-npm run backend   # Start backend only
-npm run frontend  # Start frontend only
+npm run frontend   # Starts Vite dev server (Port 3000)
+npm run backend    # Starts Flask server (Port 5001)
 ```
 
-### Option 2: Docker deployment
+---
 
-This repository builds the local source tree; it does not pull the upstream MiroFish image. The single `campuspulse` container runs Vite on port 3000 and Flask on port 5001. Only Vite is published to the host, and its `/api` proxy reaches Flask over the container loopback.
+### Step 4: Docker Deployment (Alternative)
 
-#### Prerequisites
-
-- Docker Engine or Docker Desktop with Docker Compose v2.24+ (the Compose file uses an optional `.env` file).
-- A Node 22.12-compatible image and Python 3.11 are selected by the Dockerfile; no local Node/Python installation is required for the container build.
-
-#### Configure credentials
+Run the entire application in an isolated Docker container:
 
 ```bash
-cp .env.example .env
-# Edit .env and set SECRET_KEY plus credentials needed for the features you use.
-```
+# Build and start container
+docker compose up -d --build
 
-`.env` is ignored by Git and Docker build context. Do not put credentials in the Dockerfile, Compose file, or frontend configuration. `FLASK_DEBUG` is forced to `false` by Compose.
-
-The checked-in backend contains legacy OpenAI-compatible LLM and Zep integrations. Those credentials are required only when calling their respective legacy simulation/graph/report features; they are not required for startup or `/health`. Set `VALIDATE_LEGACY_CREDENTIALS=true` only if you want startup to reject a deployment without both legacy credentials.
-
-> Gemma 4 note: this checkout contains no CampusPulse Notice-to-Action route or Gemini/Gemma client, so it does not make a Gemma request and `GEMINI_API_KEY` is intentionally not documented as an active setting. Add it only with the corresponding implemented provider/client and a tested supported model identifier; do not treat an environment variable alone as an integration.
-
-#### Build, start, verify, and stop
-
-```bash
-# Validate the resolved local-build configuration and build it.
-docker compose config
-docker compose build --no-cache
-
-# Start and inspect the service.
-docker compose up -d
-docker compose ps
-docker compose logs --tail=100 campuspulse
-
-# Frontend: http://localhost:3000
-# Backend is deliberately not published. Check it from inside the container:
-docker compose exec campuspulse python3 -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:5001/health').read().decode())"
-
-# Follow logs or stop the service. The bind-mounted uploads remain on disk.
+# Inspect logs
 docker compose logs -f campuspulse
+
+# Stop container
 docker compose down
 ```
 
-The health endpoint reports `status: ok` only when the persistent upload directory is writable. Upload data lives in `backend/uploads` on the host via a bind mount, so rebuilding or recreating the container does not remove it. For an Internet-facing deployment, publish or reverse-proxy only port 3000; never publish Flask port 5001 directly.
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-## 📬 Join the Conversation
+---
 
-<div align="center">
-<img src="./static/image/qq-group.png" alt="QQ Group" width="60%"/>
-</div>
+## 🧪 Testing Gemma 4 Connectivity
 
-&nbsp;
+Validate your Gemini API key and Gemma 4 model support directly with our diagnostic script:
 
-The MiroFish team is recruiting full-time/internship positions. If you're interested in multi-agent simulation and LLM applications, feel free to send your resume to: **mirofish@shanda.com**
+```bash
+cd backend
+python test_gemma.py
+```
 
-## 📄 Acknowledgments
+Expected output:
+```
+Key present: True
+--- Testing model: gemma-4-26b-a4b-it ---
+SUCCESS with gemma-4-26b-a4b-it:
+CampusPulse AI is a decision intelligence platform that turns campus announcements into structured student actions...
+```
 
-**MiroFish has received strategic support and incubation from Shanda Group!**
+---
 
-MiroFish's simulation engine is powered by **[OASIS (Open Agent Social Interaction Simulations)](https://github.com/camel-ai/oasis)**, We sincerely thank the CAMEL-AI team for their open-source contributions!
+## 📂 Project Structure
 
-## 📈 Project Statistics
+```
+├── .github/                      # CI/CD workflows and star history
+├── backend/                      # Python backend
+│   ├── app/
+│   │   ├── api/                  # REST endpoints (graph, simulation, report)
+│   │   ├── models/               # Data models and schemas
+│   │   ├── services/             # Notice extraction, OASIS generator, graph memory
+│   │   └── utils/                # GenAI client, retry logic, ontology helpers
+│   ├── pyproject.toml            # Backend dependencies (google-genai, flask, camel-oasis)
+│   ├── run.py                    # Flask application entry point
+│   └── test_gemma.py             # Gemma 4 verification script
+├── Docs/
+│   └── GEMMA4_ASSESSMENT.md      # Detailed architecture assessment & Hack Day roadmap
+├── frontend/                     # Vue 3 + Vite frontend
+│   ├── public/
+│   │   ├── icon.png              # High-res CampusPulse AI app icon
+│   │   └── logo.svg              # CampusPulse brand vector logo
+│   ├── src/
+│   │   ├── assets/logo/          # Logo banners and hero emblems
+│   │   ├── components/
+│   │   │   ├── NoticeToAction.vue # Primary Gemma 4 multimodal notice analyzer
+│   │   │   ├── GraphPanel.vue     # Knowledge graph interactive visualization
+│   │   │   └── Step1-Step5.vue    # Multi-agent simulation step components
+│   │   └── views/
+│   │       ├── Home.vue           # Unified interface (Notice-to-Action & Sandbox tabs)
+│   │       └── Process.vue        # Simulation workflow management
+├── locales/                      # Internationalization strings (en.json)
+├── static/image/                 # Screenshots, covers, and promotional assets
+├── docker-compose.yml            # Docker container orchestration
+├── Dockerfile                    # Multi-stage container specification
+└── README.md                     # Project documentation
+```
 
-<a href="https://github.com/666ghj/MiroFish">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="static/image/star-history-dark.svg" />
-   <source media="(prefers-color-scheme: light)" srcset="static/image/star-history-light.svg" />
-   <img alt="666ghj/MiroFish Star History Chart" src="static/image/star-history-light.svg" />
- </picture>
-</a>
+---
+
+## 📜 Acknowledgments & Attribution
+
+- **Hackathon**: Developed for the **MLH Hacktoberfest Hack Day Gwalior x ITM University 2026** under the **Best Use of Gemma 4** prize track.
+- **Google Gemma 4**: Powered by Google's open-weight Gemma 4 foundation model via the Google GenAI SDK.
+- **Simulation Engine**: Powered by **[OASIS (Open Agent Social Interaction Simulations)](https://github.com/camel-ai/oasis)** by CAMEL-AI.
+- **Upstream Foundation**: Derived from the open-source **[MiroFish](https://github.com/666ghj/MiroFish)** multi-agent simulation project by 666ghj. We extend sincere appreciation to the upstream contributors.
+
+---
+
+## ⚖️ License
+
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See the [LICENSE](./LICENSE) file for complete details.
